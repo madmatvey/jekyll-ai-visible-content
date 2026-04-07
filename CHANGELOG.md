@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.3 (2026-04-07)
+
+- Serve `/ai/page/*.md` as raw markdown output (not HTML-rendered) by generating text-backed pages with `.md` permalinks
+- Strip Liquid/Jekyll service tags (`{% ... %}`, `{{ ... }}`, comment blocks) from AI markdown content for cleaner machine-readable text
+- Read markdown content from source files to avoid leaking internal Jekyll runtime objects into AI resources
+
 ## 0.4.2 (2026-04-07)
 
 - Ensure AI link and instruction injection also works reliably on home and about pages via URL normalization/fallback lookup

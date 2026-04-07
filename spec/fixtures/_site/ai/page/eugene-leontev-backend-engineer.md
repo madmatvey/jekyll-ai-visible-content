@@ -1,16 +1,3 @@
-<hr />
-<p>title: Eugene Leontev — Backend Engineer
-description: Personal site of Eugene Leontev
-—</p>
+Welcome to the site.
 
-<p>Welcome to the site.</p>
-
-<ul>
-  <li>
-    <p><a href="/engineering/2025/01/20/rails-n-plus-one-solutions.html?from=home#top">Solving N+1 Queries in Rails</a></p>
-  </li>
-  <li>
-    <p><a href="/engineering/2025/01/15/optimizing-postgresql-queries.html?from=home#top">Optimizing PostgreSQL Queries: From 2 Seconds to 20ms</a></p>
-  </li>
-</ul>
-
+- <a href="?from=home#top"></a>

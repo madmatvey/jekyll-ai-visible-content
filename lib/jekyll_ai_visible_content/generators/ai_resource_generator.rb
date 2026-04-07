@@ -2,7 +2,6 @@
 
 require 'json'
 require 'yaml'
-require 'date'
 
 module JekyllAiVisibleContent
   module Generators
@@ -91,9 +90,9 @@ module JekyllAiVisibleContent
       def generate_page_markdown_resource(site, doc, base_path)
         slug = page_slug(doc)
         dir = "#{base_path}/page"
-        filename = "#{slug}.md"
-        path = "#{dir}/#{filename}"
-        content = build_page_markdown_content(doc)
+        filename = "#{slug}.txt"
+        path = "#{dir}/#{slug}.md"
+        content = build_page_markdown_content_from_source(doc)
 
         page = Jekyll::PageWithoutAFile.new(site, site.source, dir.sub(%r{^/}, ''), filename)
         page.content = content
@@ -104,33 +103,33 @@ module JekyllAiVisibleContent
         path
       end
 
-      def build_page_markdown_content(doc)
-        front_matter_hash = doc.data.each_with_object({}) do |(key, value), result|
-          next if %w[layout sitemap permalink excerpt].include?(key.to_s)
+      def build_page_markdown_content_from_source(doc)
+        raw = File.exist?(doc.path) ? File.read(doc.path) : doc.content.to_s
+        front_matter, body = extract_front_matter_and_body(raw)
+        cleaned_body = strip_liquid_tags(body)
 
-          sanitized = sanitize_front_matter_value(value)
-          result[key] = sanitized unless sanitized.nil?
+        if front_matter.empty?
+          cleaned_body
+        else
+          "---\n#{front_matter}---\n\n#{cleaned_body}"
         end
-        front_matter = front_matter_hash.to_yaml.sub(/\A---\s*\n/, '').sub(/\n\.\.\.\s*\n?\z/, '')
-        source_content = doc.content.to_s
-
-        "---\n#{front_matter}---\n\n#{source_content}"
       end
 
-      def sanitize_front_matter_value(value)
-        case value
-        when String, Numeric, TrueClass, FalseClass, NilClass
-          value
-        when Time, Date
-          value.iso8601
-        when Array
-          value.filter_map { |item| sanitize_front_matter_value(item) }
-        when Hash
-          value.each_with_object({}) do |(key, nested), result|
-            sanitized = sanitize_front_matter_value(nested)
-            result[key] = sanitized unless sanitized.nil?
-          end
-        end
+      def extract_front_matter_and_body(raw)
+        match = raw.match(/\A---\s*\n(.*?)\n---\s*\n?(.*)\z/m)
+        return ['', raw] unless match
+
+        ["#{match[1].rstrip}\n", match[2]]
+      end
+
+      def strip_liquid_tags(content)
+        cleaned = content.to_s
+                         .gsub(/\{%\s*comment\s*%\}.*?\{%\s*endcomment\s*%\}/m, '')
+                         .gsub(/\{%-?\s*.*?\s*-?%\}/m, '')
+                         .gsub(/\{\{\s*.*?\s*\}\}/m, '')
+                         .gsub(/\n{3,}/, "\n\n")
+                         .strip
+        "#{cleaned}\n"
       end
 
       def page_slug(doc)
