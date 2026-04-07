@@ -37,4 +37,21 @@ RSpec.describe JekyllAiVisibleContent::Generators::RobotsTxtGenerator do
       expect(robots_page.content).to include('Sitemap: https://example.com/sitemap.xml')
     end
   end
+
+  describe 'conflict detection' do
+    it 'skips generation when robots.txt exists in source' do
+      robots_path = File.join(FIXTURES_DIR, 'robots.txt')
+      begin
+        File.write(robots_path, "User-agent: *\nDisallow:")
+
+        s = make_site
+        s.process
+
+        ai_generated = s.pages.select { |p| p.name == 'robots.txt' && p.is_a?(Jekyll::PageWithoutAFile) }
+        expect(ai_generated).to be_empty
+      ensure
+        FileUtils.rm_f(robots_path)
+      end
+    end
+  end
 end

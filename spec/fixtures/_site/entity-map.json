@@ -3,45 +3,36 @@
     "id": "https://example.com/#eugene-leontev",
     "type": "Person",
     "name": "Eugene Leontev",
-    "source_pages": [
-      "/llms.txt",
-      "/llms-full.txt"
-    ],
-    "total_references": 2
+    "source_pages": [],
+    "total_references": 0
   },
   "entities": [
     {
       "name": "Ruby on Rails",
-      "mentions": 5,
+      "mentions": 3,
       "linked_posts": [
         "/engineering/2025/01/15/optimizing-postgresql-queries.html",
         "/engineering/2025/01/20/rails-n-plus-one-solutions.html",
-        "/about/",
-        "/llms.txt",
-        "/llms-full.txt"
+        "/about/"
       ]
     },
     {
       "name": "PostgreSQL",
-      "mentions": 5,
+      "mentions": 3,
       "linked_posts": [
         "/engineering/2025/01/15/optimizing-postgresql-queries.html",
         "/engineering/2025/01/20/rails-n-plus-one-solutions.html",
-        "/about/",
-        "/llms.txt",
-        "/llms-full.txt"
+        "/about/"
       ]
     },
     {
       "name": "AWS",
-      "mentions": 4,
+      "mentions": 2,
       "linked_posts": [
         "/engineering/2025/01/15/optimizing-postgresql-queries.html",
-        "/about/",
-        "/llms.txt",
-        "/llms-full.txt"
+        "/about/"
       ]
     }
   ],
-  "generated_at": "2026-04-07T15:49:17+04:00"
+  "generated_at": "2026-04-07T18:27:30+04:00"
 }

@@ -31,18 +31,40 @@ module JekyllAiVisibleContent
 
         author_config = site.config['author']
         site_author = author_config.is_a?(Hash) ? author_config['name'] : author_config
-        if site_author.is_a?(String) && site_author != canonical
+        if site_author.is_a?(String) && !canonical_author?(site_author, canonical)
           warnings << "Name inconsistency: site.author='#{site_author}' differs from entity.name='#{canonical}'"
         end
 
         site.posts.docs.each do |post|
           author = post.data['author']
-          next unless author.is_a?(String) && author != canonical
+          next unless author.is_a?(String) && !canonical_author?(author, canonical)
 
           warnings << "Name inconsistency in #{post.relative_path}: author='#{author}' differs from '#{canonical}'"
         end
 
         warnings
+      end
+
+      def canonical_author?(author_value, canonical)
+        return true if author_value == canonical
+        return true if author_aliases.include?(author_value.downcase)
+        return true if resolved_from_authors_data?(author_value, canonical)
+
+        false
+      end
+
+      def author_aliases
+        @author_aliases ||= (config.entity['author_aliases'] || []).map(&:downcase)
+      end
+
+      def resolved_from_authors_data?(slug, canonical)
+        authors = site.data['authors']
+        return false unless authors.is_a?(Hash)
+
+        entry = authors[slug]
+        return false unless entry.is_a?(Hash)
+
+        entry['name'] == canonical
       end
 
       def check_missing_same_as
@@ -64,7 +86,7 @@ module JekyllAiVisibleContent
 
       def check_missing_descriptions
         warnings = []
-        all_docs.each do |doc|
+        content_docs.each do |doc|
           next if doc.data['description'] && !doc.data['description'].to_s.strip.empty?
 
           warnings << "Missing description in #{doc.respond_to?(:relative_path) ? doc.relative_path : doc.url}"
@@ -76,7 +98,7 @@ module JekyllAiVisibleContent
         warnings = []
         generic = %w[about blog home page post]
 
-        all_docs.each do |doc|
+        content_docs.each do |doc|
           title = doc.data['title'].to_s.strip.downcase
           next unless generic.include?(title)
 
@@ -86,8 +108,14 @@ module JekyllAiVisibleContent
         warnings
       end
 
-      def all_docs
-        site.posts.docs + site.pages
+      def content_docs
+        return @content_docs if defined?(@content_docs)
+
+        @content_docs = if config.validation['content_only']
+                          ContentFilter.content_pages(site, config)
+                        else
+                          site.posts.docs + site.pages
+                        end
       end
     end
   end
