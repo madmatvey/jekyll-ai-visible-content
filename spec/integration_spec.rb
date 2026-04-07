@@ -92,6 +92,37 @@ RSpec.describe 'Integration: full site build', :integration do
     it 'populates ai_content_graph data' do
       expect(site.data['ai_content_graph']).to be_a(Hash)
     end
+
+    it 'only tracks content pages in orphan detection' do
+      orphans = site.data['ai_orphan_pages']
+      orphan_generated = orphans.grep(/llms\.txt|robots\.txt|entity-map/)
+      expect(orphan_generated).to be_empty
+    end
+  end
+
+  describe 'content filtering' do
+    it 'does not include generated files in content pages' do
+      config = JekyllAiVisibleContent.config(site)
+      content = JekyllAiVisibleContent::ContentFilter.content_pages(site, config)
+      names = content.select { |p| p.respond_to?(:name) }.map(&:name)
+      expect(names).not_to include('llms.txt', 'robots.txt', 'entity-map.json')
+    end
+
+    it 'includes authored HTML pages in content pages' do
+      config = JekyllAiVisibleContent.config(site)
+      content = JekyllAiVisibleContent::ContentFilter.content_pages(site, config)
+      urls = content.map(&:url)
+      expect(urls).to include('/about/')
+    end
+  end
+
+  describe 'entity-map.json content' do
+    it 'does not inflate counts from generated files' do
+      page = site.pages.find { |p| p.name == 'entity-map.json' }
+      data = JSON.parse(page.content)
+      pg_entity = data['entities'].find { |e| e['name'] == 'PostgreSQL' }
+      expect(pg_entity['linked_posts']).not_to include('/llms.txt', '/llms-full.txt')
+    end
   end
 
   describe 'llms.txt structure' do

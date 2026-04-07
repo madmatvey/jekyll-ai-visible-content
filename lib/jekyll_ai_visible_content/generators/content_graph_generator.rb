@@ -10,8 +10,9 @@ module JekyllAiVisibleContent
         config = JekyllAiVisibleContent.config(site)
         return unless config.enabled?
 
-        graph = build_link_graph(site, config)
-        orphans = find_orphans(graph, site)
+        content_docs = ContentFilter.content_pages(site, config)
+        graph = build_link_graph(content_docs, config)
+        orphans = find_orphans(graph, content_docs)
 
         site.data['ai_content_graph'] = graph
         site.data['ai_orphan_pages'] = orphans
@@ -19,10 +20,10 @@ module JekyllAiVisibleContent
 
       private
 
-      def build_link_graph(site, config)
+      def build_link_graph(docs, config)
         graph = Hash.new { |h, k| h[k] = { 'outbound' => [], 'inbound' => [] } }
 
-        all_docs(site).each do |doc|
+        docs.each do |doc|
           source_url = doc.url
           links = extract_internal_links(doc.content || '', config.site_url)
 
@@ -35,8 +36,8 @@ module JekyllAiVisibleContent
         graph
       end
 
-      def find_orphans(graph, site)
-        all_urls = all_docs(site).map(&:url)
+      def find_orphans(graph, docs)
+        all_urls = docs.map(&:url)
         all_urls.select { |url| (graph[url]['inbound'] || []).empty? && url != '/' }
       end
 
@@ -59,10 +60,6 @@ module JekyllAiVisibleContent
         path = url.split('?').first.split('#').first
         path = "#{path}/" unless path.end_with?('/') || path.match?(/\.\w+$/)
         path
-      end
-
-      def all_docs(site)
-        site.posts.docs + site.pages
       end
     end
   end

@@ -19,7 +19,8 @@ module JekyllAiVisibleContent
         'knows_about' => [],
         'same_as' => [],
         'works_for' => nil,
-        'occupation' => nil
+        'occupation' => nil,
+        'author_aliases' => []
       },
       'json_ld' => {
         'auto_inject' => true,
@@ -60,7 +61,11 @@ module JekyllAiVisibleContent
         'warn_missing_dates' => true,
         'warn_orphan_pages' => true,
         'warn_missing_descriptions' => true,
-        'fail_build_on_error' => false
+        'fail_build_on_error' => false,
+        'exclude_paths' => [],
+        'content_only' => true,
+        'verbose' => false,
+        'max_examples' => 3
       }
     }.freeze
 

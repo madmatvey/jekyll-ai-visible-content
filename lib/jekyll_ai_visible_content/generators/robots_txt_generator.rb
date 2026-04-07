@@ -18,6 +18,14 @@ module JekyllAiVisibleContent
         config = JekyllAiVisibleContent.config(site)
         return unless config.enabled? && config.crawlers['generate_robots_txt']
 
+        if existing_robots_txt?(site)
+          Jekyll.logger.warn 'AI Visible Content:',
+                             'Existing robots.txt detected, skipping generation. ' \
+                             'Set crawlers.generate_robots_txt: false to silence this warning, ' \
+                             'or remove your robots.txt to use the generated one.'
+          return
+        end
+
         content = render_robots_txt(config)
         page = Jekyll::PageWithoutAFile.new(site, site.source, '', 'robots.txt')
         page.content = content
@@ -27,6 +35,12 @@ module JekyllAiVisibleContent
       end
 
       private
+
+      def existing_robots_txt?(site)
+        File.exist?(File.join(site.source, 'robots.txt')) ||
+          site.static_files.any? { |f| f.relative_path == '/robots.txt' } ||
+          site.pages.any? { |p| p.name == 'robots.txt' && !p.is_a?(Jekyll::PageWithoutAFile) }
+      end
 
       def render_robots_txt(config)
         lines = []

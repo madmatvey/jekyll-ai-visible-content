@@ -24,10 +24,10 @@ module JekyllAiVisibleContent
       private
 
       def scan_content(site, registry, config)
-        all_docs = site.posts.docs + site.pages
+        docs = ContentFilter.content_pages(site, config)
         entity_names = (config.entity['knows_about'] || []) + [config.entity['name']].compact
 
-        all_docs.each do |doc|
+        docs.each do |doc|
           text = (doc.content || '').downcase
           page_url = doc.url
 

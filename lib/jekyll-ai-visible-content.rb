@@ -5,6 +5,7 @@ require 'json'
 
 require_relative 'jekyll_ai_visible_content/version'
 require_relative 'jekyll_ai_visible_content/configuration'
+require_relative 'jekyll_ai_visible_content/content_filter'
 require_relative 'jekyll_ai_visible_content/entity/person'
 require_relative 'jekyll_ai_visible_content/entity/organization'
 require_relative 'jekyll_ai_visible_content/entity/registry'
