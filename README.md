@@ -1,3 +1,5 @@
+[![CI](https://github.com/madmatvey/jekyll-ai-visible-content/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/madmatvey/jekyll-ai-visible-content/actions/workflows/ci.yml)
+
 # jekyll-ai-visible-content
 
 A Jekyll plugin gem that maximizes your site's discoverability by AI search systems (ChatGPT, Perplexity, Google AI Overviews, Claude). It generates rich JSON-LD structured data, `llms.txt`, semantic HTML helpers, and manages entity identity across your site.
