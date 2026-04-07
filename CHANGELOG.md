@@ -1,6 +1,26 @@
 # Changelog
 
-## 0.1.0 (Unreleased)
+## 0.3.0 (2026-04-07)
+
+- Fix false positives for orphan-page detection by analyzing rendered HTML instead of raw source content
+- Build inbound-link graph from final `<a href>` values produced by Liquid/layout rendering
+- Add canonical URL normalization for orphan analysis:
+  - strip query strings and hash fragments
+  - normalize `index.html` to directory URLs
+  - normalize trailing slashes for non-file paths
+  - resolve absolute internal URLs and handle `baseurl`
+- Add regression tests for Liquid-generated links and URL normalization in content graph
+
+## 0.2.0 (2026-04-07)
+
+- Add shared content filtering module to reduce validator noise on assets/generated pages
+- Improve entity consistency checks with `entity.author_aliases` and `_data/authors.yml` resolution
+- Add robots.txt conflict detection to skip generation when a site already provides `robots.txt`
+- Add grouped validation output with counts and configurable examples (`validation.max_examples`)
+- Add new validation config defaults: `content_only`, `exclude_paths`, `verbose`, `max_examples`
+- Filter entity-map mention scanning to authored content pages only
+
+## 0.1.0
 
 - Initial release
 - JSON-LD generation: Person, BlogPosting, WebSite, BreadcrumbList, FAQPage, HowTo

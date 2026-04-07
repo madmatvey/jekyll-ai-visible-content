@@ -23,6 +23,8 @@ module JekyllAiVisibleContent
           config = JekyllAiVisibleContent.config(site)
           return unless config.enabled?
 
+          refresh_rendered_link_graph(site, config)
+
           warnings = []
           errors = []
 
@@ -37,6 +39,16 @@ module JekyllAiVisibleContent
 
           print_results(warnings, errors, config)
           abort_if_needed(errors) if config.validation['fail_build_on_error'] && errors.any?
+        end
+
+        def refresh_rendered_link_graph(site, config)
+          generator = Generators::ContentGraphGenerator.new
+          docs = ContentFilter.content_pages(site, config)
+          graph = generator.send(:build_link_graph, docs, config)
+          orphans = generator.send(:find_orphans, graph, docs)
+
+          site.data['ai_content_graph'] = graph
+          site.data['ai_orphan_pages'] = orphans
         end
 
         def print_results(warnings, errors, config)

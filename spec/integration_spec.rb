@@ -98,6 +98,18 @@ RSpec.describe 'Integration: full site build', :integration do
       orphan_generated = orphans.grep(/llms\.txt|robots\.txt|entity-map/)
       expect(orphan_generated).to be_empty
     end
+
+    it 'does not report posts as orphan when linked only via Liquid-rendered index' do
+      orphans = site.data['ai_orphan_pages']
+      post_urls = site.posts.docs.map(&:url)
+      expect(orphans & post_urls).to be_empty
+    end
+
+    it 'normalizes query/hash/index links into canonical inbound entries' do
+      graph = site.data['ai_content_graph']
+      post = site.posts.docs.find { |p| p.url.include?('optimizing-postgresql-queries') }
+      expect(graph[post.url]['inbound']).to include('/')
+    end
   end
 
   describe 'content filtering' do
