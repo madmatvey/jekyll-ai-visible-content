@@ -17,7 +17,8 @@ module JekyllAiVisibleContent
       %r{^/categories/},
       %r{^/assets/},
       %r{^/page\d+/},
-      %r{^/norobots/}
+      %r{^/norobots/},
+      %r{^/ai/}
     ].freeze
 
     class << self

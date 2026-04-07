@@ -137,6 +137,58 @@ RSpec.describe 'Integration: full site build', :integration do
     end
   end
 
+  describe 'AI resource generation' do
+    it 'generates /ai/person/*.json for the primary entity' do
+      person_json = site.pages.find { |p| p.url.include?('/ai/person/eugene-leontev.json') }
+      expect(person_json).not_to be_nil
+    end
+
+    it 'generates /ai/topic/*.json for knows_about topics' do
+      pg_json = site.pages.find { |p| p.url.include?('/ai/topic/postgresql.json') }
+      expect(pg_json).not_to be_nil
+    end
+
+    it 'generates YAML and Markdown variants' do
+      pg_yml = site.pages.find { |p| p.url.include?('/ai/topic/postgresql.yml') }
+      pg_md = site.pages.find { |p| p.url.include?('/ai/topic/postgresql.md') }
+      expect(pg_yml).not_to be_nil
+      expect(pg_md).not_to be_nil
+    end
+
+    it 'injects link tags before </body>' do
+      post = site.posts.docs.find { |p| p.url.include?('postgresql') }
+      expect(post.output).to include('rel="ai:json"')
+      expect(post.output).to include('rel="ai:yaml"')
+      expect(post.output).to include('rel="ai:markdown"')
+    end
+
+    it 'injects AI instruction block before </body>' do
+      post = site.posts.docs.find { |p| p.url.include?('postgresql') }
+      expect(post.output).to include('AI: LLM INSTRUCTION')
+      expect(post.output).to include('PRIORITY PARSING MODE')
+    end
+
+    it 'does not duplicate instruction block in nested layouts' do
+      post = site.posts.docs.find { |p| p.url.include?('postgresql') }
+      occurrences = post.output.scan('AI: LLM INSTRUCTION').size
+      expect(occurrences).to eq(1)
+    end
+
+    it 'places link tags before </body>' do
+      about = site.pages.find { |p| p.url == '/about/' }
+      body_close_idx = about.output.index('</body>')
+      link_idx = about.output.index('rel="ai:json"')
+      expect(link_idx).to be < body_close_idx
+    end
+
+    it 'does not include /ai/ paths in content pages' do
+      config = JekyllAiVisibleContent.config(site)
+      content = JekyllAiVisibleContent::ContentFilter.content_pages(site, config)
+      ai_pages = content.select { |p| p.url.to_s.start_with?('/ai/') }
+      expect(ai_pages).to be_empty
+    end
+  end
+
   describe 'llms.txt structure' do
     let(:llms_page) { site.pages.find { |p| p.name == 'llms.txt' } }
 

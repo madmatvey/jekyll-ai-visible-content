@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 (2026-04-07)
+
+- Add automatic AI resource generation per content page with deterministic `/ai/<type>/<slug>.{json,yml,md}` outputs
+- Add content-aware entity classification heuristics (person/entity/topic) from front matter and page content
+- Inject `<link rel="ai:*">` tags and AI parsing instruction block before `</body>` in rendered HTML
+- Add `{% ai_resource_links %}` Liquid fallback for manual layout integration
+- Exclude generated `/ai/` resources from content filtering/orphan detection
+- Add unit and integration coverage for AI resource generation and HTML injection flow
+
 ## 0.3.0 (2026-04-07)
 
 - Fix false positives for orphan-page detection by analyzing rendered HTML instead of raw source content

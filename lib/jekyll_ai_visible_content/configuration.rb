@@ -66,6 +66,14 @@ module JekyllAiVisibleContent
         'content_only' => true,
         'verbose' => false,
         'max_examples' => 3
+      },
+      'ai_resources' => {
+        'enabled' => true,
+        'formats' => %w[json yaml markdown],
+        'max_links_per_page' => 5,
+        'auto_inject' => true,
+        'inject_instruction_block' => true,
+        'base_path' => '/ai'
       }
     }.freeze
 
@@ -111,6 +119,10 @@ module JekyllAiVisibleContent
 
     def validation
       @raw['validation']
+    end
+
+    def ai_resources
+      @raw['ai_resources']
     end
 
     def site_url
