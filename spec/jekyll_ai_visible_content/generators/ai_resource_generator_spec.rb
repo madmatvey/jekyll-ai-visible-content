@@ -93,12 +93,14 @@ RSpec.describe JekyllAiVisibleContent::Generators::AiResourceGenerator do
   end
 
   describe 'Markdown resource content' do
-    it 'contains original page markdown and front matter' do
+    it 'contains ai-readable markdown with title and description' do
       pg_md = site.pages.find { |p| p.url.include?('/ai/page/optimizing-postgresql-queries.md') }
       expect(pg_md).not_to be_nil
       rendered = pg_md.output || pg_md.content
-      expect(rendered).to include('Optimizing PostgreSQL Queries')
+      expect(rendered).to include('# Optimizing PostgreSQL Queries: From 2 Seconds to 20ms')
+      expect(rendered).to include('A deep dive into PostgreSQL query optimization.')
       expect(rendered).to include('This is a post about optimizing PostgreSQL queries.')
+      expect(rendered).not_to include('layout: post')
     end
   end
 end

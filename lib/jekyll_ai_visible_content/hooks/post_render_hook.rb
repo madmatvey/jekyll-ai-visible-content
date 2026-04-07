@@ -84,16 +84,29 @@ module JekyllAiVisibleContent
             link_html = %(<a href="#{url}" itemprop="about" itemscope ) +
                         %(itemtype="https://schema.org/Thing"><span itemprop="name">#{name}</span></a>)
 
-            count = 0
-            doc.output = doc.output.gsub(/(?<=\s|>)#{Regexp.escape(name)}(?=[\s,.<])/i) do |match|
-              if count < max_per && !inside_tag?(doc.output, Regexp.last_match.begin(0))
-                count += 1
+            doc.output = replace_entity_outside_anchor(doc.output, name, max_per, link_html)
+          end
+        end
+
+        def replace_entity_outside_anchor(html, name, max_per, link_html)
+          pattern = /(?<=\s|>)#{Regexp.escape(name)}(?=[\s,.<])/i
+          chunks = html.split(%r{(<a\b[^>]*>.*?</a>)}im)
+          replaced = 0
+
+          chunks.map!.with_index do |chunk, idx|
+            next chunk if idx.odd?
+
+            chunk.gsub(pattern) do |match|
+              if replaced < max_per
+                replaced += 1
                 link_html
               else
                 match
               end
             end
           end
+
+          chunks.join
         end
 
         def inject_ai_resource_links(doc, config)
@@ -112,10 +125,26 @@ module JekyllAiVisibleContent
             %(<link rel="#{rel}" href="#{path}">)
           end
 
-          snippet = link_tags.join("\n")
-          snippet += "\n#{AI_INSTRUCTION_BLOCK}" if config.ai_resources['inject_instruction_block']
+          inject_link_tags_into_head(doc, link_tags)
+          inject_instruction_into_body(doc, config)
+        end
 
-          doc.output = doc.output.sub('</body>', "#{snippet}\n</body>")
+        def inject_link_tags_into_head(doc, link_tags)
+          return if link_tags.empty?
+
+          head_snippet = link_tags.join("\n")
+          doc.output = if doc.output.include?('</head>')
+                         doc.output.sub('</head>', "#{head_snippet}\n</head>")
+                       else
+                         "#{head_snippet}\n#{doc.output}"
+                       end
+        end
+
+        def inject_instruction_into_body(doc, config)
+          return unless config.ai_resources['inject_instruction_block']
+          return unless doc.output.include?('</body>')
+
+          doc.output = doc.output.sub('</body>', "#{AI_INSTRUCTION_BLOCK}\n</body>")
         end
 
         def resolve_page_resources(doc, config, resources)
@@ -160,13 +189,6 @@ module JekyllAiVisibleContent
           return from_title unless from_title.empty?
 
           'home'
-        end
-
-        def inside_tag?(html, position)
-          preceding = html[0...position]
-          last_open = preceding.rindex('<') || -1
-          last_close = preceding.rindex('>') || -1
-          last_open > last_close
         end
       end
     end

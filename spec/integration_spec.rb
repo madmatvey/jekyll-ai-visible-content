@@ -86,6 +86,11 @@ RSpec.describe 'Integration: full site build', :integration do
       expect(post.output).to include('itemprop="about"')
       expect(post.output).to include('/topics/ruby-on-rails/')
     end
+
+    it 'does not create nested anchor tags on homepage links' do
+      home = site.pages.find { |p| p.url == '/' }
+      expect(home.output).not_to match(/<a [^>]*><a [^>]*>/i)
+    end
   end
 
   describe 'content graph' do
@@ -155,11 +160,12 @@ RSpec.describe 'Integration: full site build', :integration do
       expect(pg_md).not_to be_nil
     end
 
-    it 'injects link tags before </body>' do
+    it 'injects link tags into <head>' do
       post = site.posts.docs.find { |p| p.url.include?('postgresql') }
       expect(post.output).to include('rel="ai:json"')
       expect(post.output).to include('rel="ai:yaml"')
       expect(post.output).to include('rel="ai:markdown"')
+      expect(post.output.index('rel="ai:json"')).to be < post.output.index('</head>')
     end
 
     it 'injects AI instruction block before </body>' do
@@ -174,11 +180,11 @@ RSpec.describe 'Integration: full site build', :integration do
       expect(occurrences).to eq(1)
     end
 
-    it 'places link tags before </body>' do
+    it 'keeps instruction block before </body>' do
       about = site.pages.find { |p| p.url == '/about/' }
       body_close_idx = about.output.index('</body>')
-      link_idx = about.output.index('rel="ai:json"')
-      expect(link_idx).to be < body_close_idx
+      instruction_idx = about.output.index('AI: LLM INSTRUCTION')
+      expect(instruction_idx).to be < body_close_idx
     end
 
     it 'injects AI links into home page' do

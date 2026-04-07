@@ -2,6 +2,7 @@
 
 require 'json'
 require 'yaml'
+require 'date'
 
 module JekyllAiVisibleContent
   module Generators
@@ -106,13 +107,22 @@ module JekyllAiVisibleContent
       def build_page_markdown_content_from_source(doc)
         raw = File.exist?(doc.path) ? File.read(doc.path) : doc.content.to_s
         front_matter, body = extract_front_matter_and_body(raw)
+        meta = parse_front_matter_hash(front_matter)
         cleaned_body = strip_liquid_tags(body)
+        heading = meta['title'].to_s.strip
+        description = meta['description'].to_s.strip
+        subtitle = meta['subtitle'].to_s.strip
 
-        if front_matter.empty?
-          cleaned_body
-        else
-          "---\n#{front_matter}---\n\n#{cleaned_body}"
-        end
+        lines = []
+        lines << "# #{heading}" unless heading.empty?
+        lines << ''
+        lines << "_#{subtitle}_" unless subtitle.empty?
+        lines << '' unless subtitle.empty?
+        lines << description unless description.empty?
+        lines << '' unless description.empty?
+        lines << cleaned_body
+        built = lines.join("\n").gsub(/\n{3,}/, "\n\n").strip
+        "#{built}\n"
       end
 
       def extract_front_matter_and_body(raw)
@@ -130,6 +140,15 @@ module JekyllAiVisibleContent
                          .gsub(/\n{3,}/, "\n\n")
                          .strip
         "#{cleaned}\n"
+      end
+
+      def parse_front_matter_hash(front_matter)
+        return {} if front_matter.to_s.strip.empty?
+
+        parsed = YAML.safe_load(front_matter, permitted_classes: [Date, Time], aliases: true)
+        parsed.is_a?(Hash) ? parsed : {}
+      rescue Psych::Exception
+        {}
       end
 
       def page_slug(doc)

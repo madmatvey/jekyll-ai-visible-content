@@ -101,9 +101,7 @@ module JekyllAiVisibleContent
         slug = slugify(doc.url.to_s.split('/').reject(&:empty?).last)
         title = doc.data['title'].to_s.strip
 
-        if slug.empty?
-          slug = slugify(title)
-        end
+        slug = slugify(title) if slug.empty?
         return if slug.empty?
 
         name = if title.empty?

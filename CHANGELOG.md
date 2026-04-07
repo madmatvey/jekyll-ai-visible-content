@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.4.6 (2026-04-07)
+
+- Fix entity auto-linking to avoid nested `<a>` tags by skipping replacements inside existing anchor blocks
+- Add integration regression coverage for homepage nested-anchor prevention
+- Resolve remaining RuboCop style offense in `EntityClassifier`
+
+## 0.4.5 (2026-04-07)
+
+- Apply safe layout fix by moving `link[rel="ai:*"]` injection into `<head>` while keeping AI instruction block before `</body>`
+- Avoid appending raw `<link>` elements at the end of `<body>` to prevent theme/script edge-case rendering issues
+- Keep AI resource discovery behavior unchanged for JSON/YAML/Markdown links
+
+## 0.4.4 (2026-04-07)
+
+- Refine AI page markdown output to exclude full Jekyll front matter and keep only AI-relevant intro metadata
+- Build structured AI-readable markdown preface from `title`, `subtitle`, and `description`
+- Keep body content markdown while stripping Liquid/Jekyll template directives for cleaner LLM ingestion
+
 ## 0.4.3 (2026-04-07)
 
 - Serve `/ai/page/*.md` as raw markdown output (not HTML-rendered) by generating text-backed pages with `.md` permalinks
