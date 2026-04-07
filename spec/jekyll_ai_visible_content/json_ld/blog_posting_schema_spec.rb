@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe JekyllAiVisibleContent::JsonLd::BlogPostingSchema do
   let(:site) do
@@ -10,44 +10,44 @@ RSpec.describe JekyllAiVisibleContent::JsonLd::BlogPostingSchema do
   end
   let(:config) { JekyllAiVisibleContent::Configuration.new(site) }
   let(:registry) { JekyllAiVisibleContent::Entity::Registry.new(config) }
-  let(:post) { site.posts.docs.find { |p| p.url.include?("postgresql") } }
+  let(:post) { site.posts.docs.find { |p| p.url.include?('postgresql') } }
   let(:schema) { described_class.new(config, registry, post) }
 
-  describe "#build" do
+  describe '#build' do
     subject(:result) { schema.build }
 
-    it "sets @type to BlogPosting" do
-      expect(result["@type"]).to eq("BlogPosting")
+    it 'sets @type to BlogPosting' do
+      expect(result['@type']).to eq('BlogPosting')
     end
 
-    it "sets headline from title" do
-      expect(result["headline"]).to eq("Optimizing PostgreSQL Queries: From 2 Seconds to 20ms")
+    it 'sets headline from title' do
+      expect(result['headline']).to eq('Optimizing PostgreSQL Queries: From 2 Seconds to 20ms')
     end
 
-    it "links author via @id" do
-      expect(result["author"]["@id"]).to eq("https://example.com/#eugene-leontev")
+    it 'links author via @id' do
+      expect(result['author']['@id']).to eq('https://example.com/#eugene-leontev')
     end
 
-    it "includes datePublished" do
-      expect(result["datePublished"]).to be_a(String)
-      expect(result["datePublished"]).to include("2025-01-15")
+    it 'includes datePublished' do
+      expect(result['datePublished']).to be_a(String)
+      expect(result['datePublished']).to include('2025-01-15')
     end
 
-    it "includes keywords from tags" do
-      expect(result["keywords"]).to include("postgresql")
+    it 'includes keywords from tags' do
+      expect(result['keywords']).to include('postgresql')
     end
 
-    it "includes about from topics" do
-      names = result["about"].map { |a| a["name"] }
-      expect(names).to include("PostgreSQL")
+    it 'includes about from topics' do
+      names = result['about'].map { |a| a['name'] }
+      expect(names).to include('PostgreSQL')
     end
 
-    it "includes mainEntityOfPage" do
-      expect(result["mainEntityOfPage"]["@type"]).to eq("WebPage")
+    it 'includes mainEntityOfPage' do
+      expect(result['mainEntityOfPage']['@type']).to eq('WebPage')
     end
 
-    it "includes isPartOf website reference" do
-      expect(result["isPartOf"]["@id"]).to eq("https://example.com/#website")
+    it 'includes isPartOf website reference' do
+      expect(result['isPartOf']['@id']).to eq('https://example.com/#website')
     end
   end
 end

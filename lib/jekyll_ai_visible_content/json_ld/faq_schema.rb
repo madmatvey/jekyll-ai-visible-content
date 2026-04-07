@@ -11,12 +11,12 @@ module JekyllAiVisibleContent
       end
 
       def build
-        faq_items = page.data["faq"]
+        faq_items = page.data['faq']
         return nil unless faq_items&.any?
 
         {
-          "@type" => "FAQPage",
-          "mainEntity" => faq_items.map { |item| build_question(item) }
+          '@type' => 'FAQPage',
+          'mainEntity' => faq_items.map { |item| build_question(item) }
         }
       end
 
@@ -24,11 +24,11 @@ module JekyllAiVisibleContent
 
       def build_question(item)
         {
-          "@type" => "Question",
-          "name" => item["question"],
-          "acceptedAnswer" => {
-            "@type" => "Answer",
-            "text" => item["answer"]
+          '@type' => 'Question',
+          'name' => item['question'],
+          'acceptedAnswer' => {
+            '@type' => 'Answer',
+            'text' => item['answer']
           }
         }
       end

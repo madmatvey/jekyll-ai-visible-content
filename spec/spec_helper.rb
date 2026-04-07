@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "jekyll"
-require "jekyll-ai-visible-content"
+require 'jekyll'
+require 'jekyll-ai-visible-content'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -17,27 +17,27 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
   config.order = :random
 
-  FIXTURES_DIR = File.expand_path("fixtures", __dir__)
+  FIXTURES_DIR = File.expand_path('fixtures', __dir__)
 
   def make_site(overrides = {})
     config = Jekyll.configuration(
-      "source" => FIXTURES_DIR,
-      "destination" => File.join(FIXTURES_DIR, "_site"),
-      "url" => "https://example.com",
-      "quiet" => true
+      'source' => FIXTURES_DIR,
+      'destination' => File.join(FIXTURES_DIR, '_site'),
+      'url' => 'https://example.com',
+      'quiet' => true
     ).merge(overrides)
     Jekyll::Site.new(config)
   end
 
   def make_page(site, attrs = {})
-    page = Jekyll::Page.new(site, site.source, "", "index.md")
+    page = Jekyll::Page.new(site, site.source, '', 'index.md')
     attrs.each { |k, v| page.data[k.to_s] = v }
     page
   end
 
   def make_post(site, name, attrs = {})
-    collection = site.collections["posts"]
-    path = File.join(site.source, "_posts", name)
+    collection = site.collections['posts']
+    path = File.join(site.source, '_posts', name)
     doc = Jekyll::Document.new(path, site: site, collection: collection)
     attrs.each { |k, v| doc.data[k.to_s] = v }
     doc

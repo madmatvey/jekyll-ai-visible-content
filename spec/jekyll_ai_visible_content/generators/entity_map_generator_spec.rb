@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe JekyllAiVisibleContent::Generators::EntityMapGenerator do
   let(:site) do
@@ -9,29 +9,29 @@ RSpec.describe JekyllAiVisibleContent::Generators::EntityMapGenerator do
     s
   end
 
-  describe "entity-map.json generation" do
-    let(:entity_map_page) { site.pages.find { |p| p.name == "entity-map.json" } }
+  describe 'entity-map.json generation' do
+    let(:entity_map_page) { site.pages.find { |p| p.name == 'entity-map.json' } }
 
-    it "generates entity-map.json" do
+    it 'generates entity-map.json' do
       expect(entity_map_page).not_to be_nil
     end
 
-    it "contains valid JSON" do
+    it 'contains valid JSON' do
       data = JSON.parse(entity_map_page.content)
-      expect(data).to have_key("primary_entity")
-      expect(data).to have_key("entities")
+      expect(data).to have_key('primary_entity')
+      expect(data).to have_key('entities')
     end
 
-    it "includes primary entity info" do
+    it 'includes primary entity info' do
       data = JSON.parse(entity_map_page.content)
-      expect(data["primary_entity"]["name"]).to eq("Eugene Leontev")
-      expect(data["primary_entity"]["type"]).to eq("Person")
+      expect(data['primary_entity']['name']).to eq('Eugene Leontev')
+      expect(data['primary_entity']['type']).to eq('Person')
     end
 
-    it "includes topic entities" do
+    it 'includes topic entities' do
       data = JSON.parse(entity_map_page.content)
-      names = data["entities"].map { |e| e["name"] }
-      expect(names).to include("PostgreSQL", "Ruby on Rails")
+      names = data['entities'].map { |e| e['name'] }
+      expect(names).to include('PostgreSQL', 'Ruby on Rails')
     end
   end
 end

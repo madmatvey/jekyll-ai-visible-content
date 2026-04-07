@@ -20,7 +20,7 @@ module JekyllAiVisibleContent
       def primary_entity_ref
         return nil unless config.entity_id
 
-        { "@type" => config.entity_type, "@id" => config.entity_id }
+        { '@type' => config.entity_type, '@id' => config.entity_id }
       end
 
       def record_mention(entity_name, page_url)
@@ -42,47 +42,47 @@ module JekyllAiVisibleContent
       end
 
       def topic_url(topic_name)
-        slug = normalize_name(topic_name).gsub(/\s+/, "-")
+        slug = normalize_name(topic_name).gsub(/\s+/, '-')
         "/topics/#{slug}/"
       end
 
       def entity_definitions
-        defs = config.linking["entity_definitions"] || {}
-        knows = config.entity["knows_about"] || []
+        defs = config.linking['entity_definitions'] || {}
+        knows = config.entity['knows_about'] || []
 
         knows.each_with_object(defs.dup) do |topic, result|
-          slug = normalize_name(topic).gsub(/\s+/, "-")
+          slug = normalize_name(topic).gsub(/\s+/, '-')
           next if result.key?(slug)
 
           result[slug] = {
-            "name" => topic,
-            "url" => topic_url(topic),
-            "description" => nil
+            'name' => topic,
+            'url' => topic_url(topic),
+            'description' => nil
           }
         end
       end
 
       def find_entity_by_name(name)
         normalized = normalize_name(name)
-        entity_definitions.values.find { |d| normalize_name(d["name"]) == normalized }
+        entity_definitions.values.find { |d| normalize_name(d['name']) == normalized }
       end
 
       private
 
       def build_primary_entity
-        return nil unless config.entity["name"]
+        return nil unless config.entity['name']
 
         case config.entity_type
-        when "Person"
+        when 'Person'
           Person.new(config)
-        when "Organization"
+        when 'Organization'
           Organization.new(config)
         end
       end
 
       def build_topic_entities
-        (config.entity["knows_about"] || []).map do |topic|
-          { "name" => topic, "slug" => normalize_name(topic).gsub(/\s+/, "-") }
+        (config.entity['knows_about'] || []).map do |topic|
+          { 'name' => topic, 'slug' => normalize_name(topic).gsub(/\s+/, '-') }
         end
       end
 
