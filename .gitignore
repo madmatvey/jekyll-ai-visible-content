@@ -1,2 +1,3 @@
 .cursor
 *.gem
+.playwright-mcp/
