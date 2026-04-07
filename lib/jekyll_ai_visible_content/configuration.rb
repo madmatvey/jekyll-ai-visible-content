@@ -80,7 +80,7 @@ module JekyllAiVisibleContent
     end
 
     def entity_id
-      slug = entity['id_slug'] || entity['name']&.downcase&.gsub(/[^a-z0-9]+/, '-')&.gsub(/(^-|-$)/, '')
+      slug = entity['id_slug'] || normalize_slug(entity['name'])
       "#{site_url}/##{slug}" if slug
     end
 
@@ -132,6 +132,12 @@ module JekyllAiVisibleContent
     end
 
     private
+
+    def normalize_slug(value)
+      return nil unless value
+
+      value.downcase.gsub(/[^a-z0-9]+/, '-').gsub(/(^-|-$)/, '')
+    end
 
     def deep_merge(base, override)
       base.each_with_object(base.dup) do |(key, base_val), result|

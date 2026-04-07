@@ -74,7 +74,8 @@ module JekyllAiVisibleContent
           lines << '      </a>'
           if post.data['date']
             dt = post.data['date'].strftime('%Y-%m-%d')
-            lines << "      <time itemprop=\"datePublished\" datetime=\"#{dt}\">#{post.data['date'].strftime('%b %d, %Y')}</time>"
+            published = post.data['date'].strftime('%b %d, %Y')
+            lines << "      <time itemprop=\"datePublished\" datetime=\"#{dt}\">#{published}</time>"
           end
           lines << '    </li>'
         end

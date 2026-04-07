@@ -37,11 +37,11 @@ module JekyllAiVisibleContent
   class Error < StandardError; end
 
   def self.config(site)
-    @configs ||= {}
-    @configs[site.object_id] ||= Configuration.new(site)
+    @configs ||= {}.compare_by_identity
+    @configs[site] ||= Configuration.new(site)
   end
 
   def self.reset!
-    @configs = {}
+    @configs = {}.compare_by_identity
   end
 end
