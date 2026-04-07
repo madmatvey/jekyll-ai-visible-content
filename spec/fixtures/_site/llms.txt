@@ -1,0 +1,27 @@
+# Test Site
+
+> A test site for jekyll-ai-visible-content
+
+## About
+
+Eugene Leontev is Backend engineer specializing in Ruby on Rails, PostgreSQL, and AWS.
+
+- Role: Senior Backend Engineer / Fractional CTO
+- Location: Tbilisi, GE
+
+## Key Topics
+
+- Ruby on Rails
+- PostgreSQL
+- AWS
+
+## Posts
+
+- [Solving N+1 Queries in Rails](https://example.com/engineering/2025/01/20/rails-n-plus-one-solutions.html): Practical solutions for N+1 query problems in Ruby on Rails.
+- [Optimizing PostgreSQL Queries: From 2 Seconds to 20ms](https://example.com/engineering/2025/01/15/optimizing-postgresql-queries.html): A deep dive into PostgreSQL query optimization.
+
+## Links
+
+- About: https://example.com/about/
+- LinkedIn: https://linkedin.com/in/test-handle
+- GitHub: https://github.com/test-handle

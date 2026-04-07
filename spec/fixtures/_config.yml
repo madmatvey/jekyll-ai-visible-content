@@ -1,0 +1,64 @@
+title: "Test Site"
+description: "A test site for jekyll-ai-visible-content"
+url: "https://example.com"
+author:
+  name: "Eugene Leontev"
+
+ai_visible_content:
+  enabled: true
+  entity:
+    type: Person
+    id_slug: "eugene-leontev"
+    name: "Eugene Leontev"
+    alternate_names:
+      - "Евгений Леонтьев"
+    job_title: "Senior Backend Engineer / Fractional CTO"
+    description: >
+      Backend engineer specializing in Ruby on Rails, PostgreSQL, and AWS.
+    image: /assets/img/eugene-leontev.jpg
+    email: eugene@example.com
+    location:
+      locality: "Tbilisi"
+      country: "GE"
+    knows_about:
+      - Ruby on Rails
+      - PostgreSQL
+      - AWS
+    same_as:
+      - https://linkedin.com/in/test-handle
+      - https://github.com/test-handle
+    works_for:
+      type: Organization
+      name: "Freelance"
+    occupation:
+      name: "Backend Engineer"
+      location_country: "Georgia"
+      skills: "Ruby on Rails, PostgreSQL, AWS"
+  json_ld:
+    auto_inject: true
+    include_website_schema: true
+    include_breadcrumbs: true
+    include_blog_posting: true
+    include_faq: true
+    include_how_to: true
+    article_body: excerpt
+    compact: false
+  crawlers:
+    allow_gptbot: true
+    allow_perplexitybot: true
+    allow_claudebot: true
+    generate_robots_txt: true
+  llms_txt:
+    enabled: true
+    include_full_text: true
+  linking:
+    enable_entity_links: true
+    enable_related_posts: true
+    related_posts_limit: 3
+  validation:
+    warn_name_inconsistency: true
+    warn_missing_same_as: true
+    warn_missing_dates: true
+    warn_orphan_pages: true
+    warn_missing_descriptions: true
+    fail_build_on_error: false
