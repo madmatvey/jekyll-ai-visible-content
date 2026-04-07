@@ -12,12 +12,12 @@ module JekyllAiVisibleContent
 
       def build
         data = {
-          "@type" => "WebSite",
-          "@id" => "#{config.site_url}/#website",
-          "url" => config.site_url,
-          "name" => config.site_title,
-          "description" => config.site_description&.strip,
-          "publisher" => registry.primary_entity_ref
+          '@type' => 'WebSite',
+          '@id' => "#{config.site_url}/#website",
+          'url' => config.site_url,
+          'name' => config.site_title,
+          'description' => config.site_description&.strip,
+          'publisher' => registry.primary_entity_ref
         }
 
         append_search_action(data)
@@ -28,10 +28,10 @@ module JekyllAiVisibleContent
 
       def append_search_action(data)
         search_url = "#{config.site_url}/search?q={search_term_string}"
-        data["potentialAction"] = {
-          "@type" => "SearchAction",
-          "target" => search_url,
-          "query-input" => "required name=search_term_string"
+        data['potentialAction'] = {
+          '@type' => 'SearchAction',
+          'target' => search_url,
+          'query-input' => 'required name=search_term_string'
         }
       end
     end

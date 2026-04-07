@@ -5,10 +5,10 @@ module JekyllAiVisibleContent
     module NamingFilter
       def ai_slugify(input)
         input.to_s.strip.downcase
-             .gsub(/[^a-z0-9\s-]/, "")
-             .gsub(/\s+/, "-")
-             .gsub(/-+/, "-")
-             .gsub(/(^-|-$)/, "")
+             .gsub(/[^a-z0-9\s-]/, '')
+             .gsub(/\s+/, '-')
+             .gsub(/-+/, '-')
+             .gsub(/(^-|-$)/, '')
       end
 
       def ai_entity_slug(input)
@@ -17,7 +17,7 @@ module JekyllAiVisibleContent
 
       def ai_canonical_url(input)
         url = input.to_s.strip
-        url = "#{url}/" unless url.end_with?("/") || url.match?(/\.\w+$/)
+        url = "#{url}/" unless url.end_with?('/') || url.match?(/\.\w+$/)
         url
       end
     end

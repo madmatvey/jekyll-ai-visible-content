@@ -20,7 +20,7 @@ module JekyllAiVisibleContent
         definition = registry.find_entity_by_name(@entity_name)
 
         if definition
-          url = definition["url"]
+          url = definition['url']
           build_link(url, @entity_name)
         else
           @entity_name
@@ -37,4 +37,4 @@ module JekyllAiVisibleContent
   end
 end
 
-Liquid::Template.register_tag("ai_entity_link", JekyllAiVisibleContent::Tags::AiEntityLinkTag)
+Liquid::Template.register_tag('ai_entity_link', JekyllAiVisibleContent::Tags::AiEntityLinkTag)

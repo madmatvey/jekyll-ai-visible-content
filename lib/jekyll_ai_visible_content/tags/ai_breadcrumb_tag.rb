@@ -7,28 +7,28 @@ module JekyllAiVisibleContent
         site = context.registers[:site]
         page = context.registers[:page]
         config = JekyllAiVisibleContent.config(site)
-        return "" unless config.enabled? && config.json_ld["include_breadcrumbs"]
+        return '' unless config.enabled? && config.json_ld['include_breadcrumbs']
 
-        url = page["url"] || "/"
-        segments = url.to_s.split("/").reject(&:empty?)
-        return "" if segments.empty?
+        url = page['url'] || '/'
+        segments = url.to_s.split('/').reject(&:empty?)
+        return '' if segments.empty?
 
-        items = [breadcrumb_item("Home", "#{config.site_url}/")]
+        items = [breadcrumb_item('Home', "#{config.site_url}/")]
 
-        path = ""
+        path = ''
         segments.each_with_index do |segment, idx|
           path = "#{path}/#{segment}"
           name = if idx == segments.size - 1
-                   page["title"] || humanize(segment)
+                   page['title'] || humanize(segment)
                  else
                    humanize(segment)
                  end
 
-          if idx == segments.size - 1
-            items << %(<li><span aria-current="page">#{name}</span></li>)
-          else
-            items << breadcrumb_item(name, "#{config.site_url}#{path}/")
-          end
+          items << if idx == segments.size - 1
+                     %(<li><span aria-current="page">#{name}</span></li>)
+                   else
+                     breadcrumb_item(name, "#{config.site_url}#{path}/")
+                   end
         end
 
         %(<nav aria-label="Breadcrumb"><ol>#{items.join}</ol></nav>)
@@ -41,10 +41,10 @@ module JekyllAiVisibleContent
       end
 
       def humanize(slug)
-        slug.gsub(/[-_]/, " ").gsub(/\b\w/, &:upcase)
+        slug.gsub(/[-_]/, ' ').gsub(/\b\w/, &:upcase)
       end
     end
   end
 end
 
-Liquid::Template.register_tag("ai_breadcrumbs", JekyllAiVisibleContent::Tags::AiBreadcrumbTag)
+Liquid::Template.register_tag('ai_breadcrumbs', JekyllAiVisibleContent::Tags::AiBreadcrumbTag)

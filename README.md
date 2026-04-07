@@ -1,3 +1,5 @@
+[![CI](https://github.com/madmatvey/jekyll-ai-visible-content/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/madmatvey/jekyll-ai-visible-content/actions/workflows/ci.yml)
+
 # jekyll-ai-visible-content
 
 A Jekyll plugin gem that maximizes your site's discoverability by AI search systems (ChatGPT, Perplexity, Google AI Overviews, Claude). It generates rich JSON-LD structured data, `llms.txt`, semantic HTML helpers, and manages entity identity across your site.
@@ -334,7 +336,7 @@ Set `validation.fail_build_on_error: true` to make errors break the build in CI.
 - Works alongside `jekyll-seo-tag` (avoids duplicate WebSite JSON-LD)
 - Works alongside `jekyll-sitemap` (does not generate its own sitemap)
 - Works alongside `jekyll-feed`
-- Requires Jekyll 4.0+ and Ruby 3.0+
+- Requires Jekyll 4.0+ and Ruby 3.2+
 
 ## Development
 

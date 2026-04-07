@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe JekyllAiVisibleContent::Generators::RobotsTxtGenerator do
   let(:site) do
@@ -9,32 +9,32 @@ RSpec.describe JekyllAiVisibleContent::Generators::RobotsTxtGenerator do
     s
   end
 
-  describe "robots.txt generation" do
-    let(:robots_page) { site.pages.find { |p| p.name == "robots.txt" } }
+  describe 'robots.txt generation' do
+    let(:robots_page) { site.pages.find { |p| p.name == 'robots.txt' } }
 
-    it "generates robots.txt" do
+    it 'generates robots.txt' do
       expect(robots_page).not_to be_nil
     end
 
-    it "includes wildcard allow" do
-      expect(robots_page.content).to include("User-agent: *")
-      expect(robots_page.content).to include("Allow: /")
+    it 'includes wildcard allow' do
+      expect(robots_page.content).to include('User-agent: *')
+      expect(robots_page.content).to include('Allow: /')
     end
 
-    it "includes GPTBot" do
-      expect(robots_page.content).to include("User-agent: GPTBot")
+    it 'includes GPTBot' do
+      expect(robots_page.content).to include('User-agent: GPTBot')
     end
 
-    it "includes PerplexityBot" do
-      expect(robots_page.content).to include("User-agent: PerplexityBot")
+    it 'includes PerplexityBot' do
+      expect(robots_page.content).to include('User-agent: PerplexityBot')
     end
 
-    it "includes ClaudeBot" do
-      expect(robots_page.content).to include("User-agent: ClaudeBot")
+    it 'includes ClaudeBot' do
+      expect(robots_page.content).to include('User-agent: ClaudeBot')
     end
 
-    it "includes sitemap" do
-      expect(robots_page.content).to include("Sitemap: https://example.com/sitemap.xml")
+    it 'includes sitemap' do
+      expect(robots_page.content).to include('Sitemap: https://example.com/sitemap.xml')
     end
   end
 end

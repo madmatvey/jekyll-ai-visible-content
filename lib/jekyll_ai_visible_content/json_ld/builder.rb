@@ -16,23 +16,19 @@ module JekyllAiVisibleContent
 
         if person_page?(page)
           nodes << PersonSchema.new(config, registry).build
-          nodes << WebsiteSchema.new(config, registry).build if config.json_ld["include_website_schema"]
-        elsif post_page?(page) && config.json_ld["include_blog_posting"]
+          nodes << WebsiteSchema.new(config, registry).build if config.json_ld['include_website_schema']
+        elsif post_page?(page) && config.json_ld['include_blog_posting']
           nodes << BlogPostingSchema.new(config, registry, page).build
         end
 
-        if config.json_ld["include_breadcrumbs"]
+        if config.json_ld['include_breadcrumbs']
           crumbs = BreadcrumbSchema.new(config, page).build
           nodes << crumbs if crumbs
         end
 
-        if config.json_ld["include_faq"] && page_data["faq"]&.any?
-          nodes << FaqSchema.new(config, page).build
-        end
+        nodes << FaqSchema.new(config, page).build if config.json_ld['include_faq'] && page_data['faq']&.any?
 
-        if config.json_ld["include_how_to"] && page_data["how_to"]
-          nodes << HowToSchema.new(config, page).build
-        end
+        nodes << HowToSchema.new(config, page).build if config.json_ld['include_how_to'] && page_data['how_to']
 
         nodes.compact
       end
@@ -40,15 +36,15 @@ module JekyllAiVisibleContent
       def build_for_homepage
         nodes = []
         nodes << PersonSchema.new(config, registry).build if registry.primary_entity
-        nodes << WebsiteSchema.new(config, registry).build if config.json_ld["include_website_schema"]
+        nodes << WebsiteSchema.new(config, registry).build if config.json_ld['include_website_schema']
         nodes.compact
       end
 
       def to_script_tag(nodes, compact: nil)
-        return "" if nodes.empty?
+        return '' if nodes.empty?
 
-        use_compact = compact.nil? ? config.json_ld["compact"] : compact
-        graph = { "@context" => "https://schema.org", "@graph" => nodes }
+        use_compact = compact.nil? ? config.json_ld['compact'] : compact
+        graph = { '@context' => 'https://schema.org', '@graph' => nodes }
         json = use_compact ? JSON.generate(graph) : JSON.pretty_generate(graph)
         %(<script type="application/ld+json">\n#{json}\n</script>)
       end
@@ -56,12 +52,12 @@ module JekyllAiVisibleContent
       private
 
       def person_page?(page)
-        page.data["entity_type"] == "Person" ||
+        page.data['entity_type'] == 'Person' ||
           (page.respond_to?(:url) && page.url&.match?(%r{/about/?$}))
       end
 
       def post_page?(page)
-        page.respond_to?(:collection) && page.collection&.label == "posts"
+        page.respond_to?(:collection) && page.collection&.label == 'posts'
       end
     end
   end

@@ -6,10 +6,10 @@ module JekyllAiVisibleContent
       def render(context)
         site = context.registers[:site]
         config = JekyllAiVisibleContent.config(site)
-        return "" unless config.enabled?
+        return '' unless config.enabled?
 
         entity = config.entity
-        return "" unless entity["name"]
+        return '' unless entity['name']
 
         parts = []
         parts << %(<span itemprop="author" itemscope itemtype="https://schema.org/Person">)
@@ -23,4 +23,4 @@ module JekyllAiVisibleContent
   end
 end
 
-Liquid::Template.register_tag("ai_author", JekyllAiVisibleContent::Tags::AiAuthorTag)
+Liquid::Template.register_tag('ai_author', JekyllAiVisibleContent::Tags::AiAuthorTag)

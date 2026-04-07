@@ -22,11 +22,11 @@ module JekyllAiVisibleContent
         errors = []
         return errors unless node.is_a?(Hash)
 
-        case node["@type"]
-        when "Person"
-          errors.concat(validate_fields(node, REQUIRED_PERSON_FIELDS, "Person"))
-        when "BlogPosting"
-          errors.concat(validate_fields(node, REQUIRED_POSTING_FIELDS, "BlogPosting"))
+        case node['@type']
+        when 'Person'
+          errors.concat(validate_fields(node, REQUIRED_PERSON_FIELDS, 'Person'))
+        when 'BlogPosting'
+          errors.concat(validate_fields(node, REQUIRED_POSTING_FIELDS, 'BlogPosting'))
         end
 
         errors
@@ -38,12 +38,12 @@ module JekyllAiVisibleContent
         errors = []
         entity = config.entity
 
-        unless entity["name"] && !entity["name"].strip.empty?
-          errors << "Entity name is required in ai_visible_content.entity.name"
+        unless entity['name'] && !entity['name'].strip.empty?
+          errors << 'Entity name is required in ai_visible_content.entity.name'
         end
 
-        if entity["id_slug"].nil? && entity["name"].nil?
-          errors << "Entity requires either id_slug or name to generate @id"
+        if entity['id_slug'].nil? && entity['name'].nil?
+          errors << 'Entity requires either id_slug or name to generate @id'
         end
 
         errors

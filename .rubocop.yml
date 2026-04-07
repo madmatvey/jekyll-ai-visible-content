@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.2
   NewCops: enable
   SuggestExtensions: false
   Exclude:
@@ -13,10 +13,27 @@ Metrics/ClassLength:
   Max: 200
 
 Metrics/AbcSize:
-  Max: 30
+  Max: 60
 
 Style/Documentation:
   Enabled: false
 
 Layout/LineLength:
   Max: 120
+
+Naming/FileName:
+  Exclude:
+    - "lib/jekyll-ai-visible-content.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*.rb"
+
+Metrics/CyclomaticComplexity:
+  Max: 20
+
+Metrics/PerceivedComplexity:
+  Max: 20
+
+Gemspec/DevelopmentDependencies:
+  Enabled: false

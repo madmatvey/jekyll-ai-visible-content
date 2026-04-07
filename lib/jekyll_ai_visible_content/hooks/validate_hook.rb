@@ -27,15 +27,15 @@ module JekyllAiVisibleContent
           warnings.concat(link_validator.validate)
 
           print_results(warnings, errors)
-          abort_if_needed(errors, config) if config.validation["fail_build_on_error"] && errors.any?
+          abort_if_needed(errors, config) if config.validation['fail_build_on_error'] && errors.any?
         end
 
         def print_results(warnings, errors)
           return if warnings.empty? && errors.empty?
 
-          Jekyll.logger.info "AI Visible Content:", "Validation report"
-          warnings.each { |w| Jekyll.logger.warn "AI Visible Content:", w }
-          errors.each { |e| Jekyll.logger.error "AI Visible Content:", e }
+          Jekyll.logger.info 'AI Visible Content:', 'Validation report'
+          warnings.each { |w| Jekyll.logger.warn 'AI Visible Content:', w }
+          errors.each { |e| Jekyll.logger.error 'AI Visible Content:', e }
         end
 
         def abort_if_needed(errors, _config)
