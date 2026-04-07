@@ -2,6 +2,7 @@
 
 require 'json'
 require 'yaml'
+require 'date'
 
 module JekyllAiVisibleContent
   module Generators
@@ -15,16 +16,25 @@ module JekyllAiVisibleContent
         return unless config.ai_resources['enabled']
 
         formats = config.ai_resources['formats'] || %w[json yaml markdown]
+        structured_formats = formats - ['markdown']
         base_path = config.ai_resources['base_path'] || '/ai'
+        docs = ContentFilter.content_pages(site, config)
 
-        entity_index = build_entity_index(site, config)
+        entity_index = build_entity_index(docs, config)
         page_resources = {}
 
         entity_index.each_value do |entry|
-          paths = generate_resource_files(site, config, entry, formats, base_path)
+          paths = generate_resource_files(site, config, entry, structured_formats, base_path)
           entry[:pages].each do |page_url|
             page_resources[page_url] ||= []
             page_resources[page_url].concat(paths)
+          end
+        end
+
+        if formats.include?('markdown')
+          docs.each do |doc|
+            page_resources[doc.url] ||= []
+            page_resources[doc.url] << generate_page_markdown_resource(site, doc, base_path)
           end
         end
 
@@ -36,9 +46,8 @@ module JekyllAiVisibleContent
 
       private
 
-      def build_entity_index(site, config)
+      def build_entity_index(docs, config)
         index = {}
-        docs = ContentFilter.content_pages(site, config)
 
         docs.each do |doc|
           entities = EntityClassifier.classify_page(doc, config)
@@ -54,6 +63,8 @@ module JekyllAiVisibleContent
 
       def generate_resource_files(site, config, entry, formats, base_path)
         paths = []
+        return paths if formats.empty?
+
         dir = "#{base_path}/#{entry[:type]}"
 
         formats.each do |fmt|
@@ -77,11 +88,67 @@ module JekyllAiVisibleContent
         paths
       end
 
+      def generate_page_markdown_resource(site, doc, base_path)
+        slug = page_slug(doc)
+        dir = "#{base_path}/page"
+        filename = "#{slug}.md"
+        path = "#{dir}/#{filename}"
+        content = build_page_markdown_content(doc)
+
+        page = Jekyll::PageWithoutAFile.new(site, site.source, dir.sub(%r{^/}, ''), filename)
+        page.content = content
+        page.data['layout'] = nil
+        page.data['sitemap'] = false
+        page.data['permalink'] = path
+        site.pages << page
+        path
+      end
+
+      def build_page_markdown_content(doc)
+        front_matter_hash = doc.data.each_with_object({}) do |(key, value), result|
+          next if %w[layout sitemap permalink excerpt].include?(key.to_s)
+
+          sanitized = sanitize_front_matter_value(value)
+          result[key] = sanitized unless sanitized.nil?
+        end
+        front_matter = front_matter_hash.to_yaml.sub(/\A---\s*\n/, '').sub(/\n\.\.\.\s*\n?\z/, '')
+        source_content = doc.content.to_s
+
+        "---\n#{front_matter}---\n\n#{source_content}"
+      end
+
+      def sanitize_front_matter_value(value)
+        case value
+        when String, Numeric, TrueClass, FalseClass, NilClass
+          value
+        when Time, Date
+          value.iso8601
+        when Array
+          value.filter_map { |item| sanitize_front_matter_value(item) }
+        when Hash
+          value.each_with_object({}) do |(key, nested), result|
+            sanitized = sanitize_front_matter_value(nested)
+            result[key] = sanitized unless sanitized.nil?
+          end
+        end
+      end
+
+      def page_slug(doc)
+        from_url = doc.url.to_s.split('/').reject(&:empty?).last
+        from_url = from_url.sub(/\.[a-z0-9]+\z/i, '') if from_url
+        slug = EntityClassifier.slugify(from_url)
+        return slug unless slug.empty?
+
+        from_title = EntityClassifier.slugify(doc.data['title'])
+        return from_title unless from_title.empty?
+
+        'home'
+      end
+
       def build_content(config, entry, format)
         case format
         when 'json' then build_json(config, entry)
         when 'yaml' then build_yaml(config, entry)
-        when 'markdown' then build_markdown(config, entry)
         end
       end
 
@@ -93,44 +160,6 @@ module JekyllAiVisibleContent
       def build_yaml(config, entry)
         data = resource_data(config, entry)
         YAML.dump(data)
-      end
-
-      def build_markdown(config, entry)
-        data = resource_data(config, entry)
-        lines = []
-        lines << "# #{data['name']}"
-        lines << ''
-        lines << "- **Type**: #{data['@type']}"
-        lines << "- **Category**: #{entry[:type]}"
-        lines << ''
-
-        if data['description']
-          lines << data['description']
-          lines << ''
-        end
-
-        if data['jobTitle']
-          lines << "- **Role**: #{data['jobTitle']}"
-          lines << ''
-        end
-
-        if data['sameAs']&.any?
-          lines << '## Links'
-          lines << ''
-          data['sameAs'].each { |url| lines << "- <#{url}>" }
-          lines << ''
-        end
-
-        if data['mentions_on']&.any?
-          lines << '## Pages'
-          lines << ''
-          data['mentions_on'].each do |mention|
-            lines << "- [#{mention['title'] || mention['url']}](#{mention['url']})"
-          end
-          lines << ''
-        end
-
-        lines.join("\n")
       end
 
       def resource_data(config, entry)

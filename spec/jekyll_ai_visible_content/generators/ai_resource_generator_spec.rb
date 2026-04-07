@@ -20,8 +20,8 @@ RSpec.describe JekyllAiVisibleContent::Generators::AiResourceGenerator do
       expect(ai_pages).not_to be_empty
     end
 
-    it 'generates Markdown files under /ai/' do
-      ai_pages = site.pages.select { |p| p.url.start_with?('/ai/') && p.url.end_with?('.md') }
+    it 'generates page Markdown files under /ai/page/' do
+      ai_pages = site.pages.select { |p| p.url.start_with?('/ai/page/') && p.url.end_with?('.md') }
       expect(ai_pages).not_to be_empty
     end
 
@@ -93,12 +93,12 @@ RSpec.describe JekyllAiVisibleContent::Generators::AiResourceGenerator do
   end
 
   describe 'Markdown resource content' do
-    it 'generates readable content with heading' do
-      pg_md = site.pages.find { |p| p.url.include?('/ai/topic/postgresql.md') }
+    it 'contains original page markdown and front matter' do
+      pg_md = site.pages.find { |p| p.url.include?('/ai/page/optimizing-postgresql-queries.md') }
       expect(pg_md).not_to be_nil
       rendered = pg_md.output || pg_md.content
-      expect(rendered).to include('PostgreSQL')
-      expect(rendered).to include('Type')
+      expect(rendered).to include('Optimizing PostgreSQL Queries')
+      expect(rendered).to include('This is a post about optimizing PostgreSQL queries.')
     end
   end
 end

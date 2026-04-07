@@ -1,0 +1,346 @@
+- generic [active] [ref=e1]:
+  - complementary "Sidebar" [ref=e2]:
+    - generic [ref=e3]:
+      - link "Go to homepage" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Go to homepage
+        - generic [ref=e6]: Go to homepage
+        - img [ref=e7]
+      - heading "Go to homepage" [level=2] [ref=e8]:
+        - link "Go to homepage" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - text: Eugene Leontev The Engineer
+      - paragraph [ref=e10]: Innovate. Code. Inspire. Since 1984.
+    - navigation [ref=e11]:
+      - list [ref=e12]:
+        - listitem [ref=e13]:
+          - link "Go to homepage" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e15]: 
+            - generic [ref=e16]: HOME
+        - listitem [ref=e17]:
+          - link "Go to CATEGORIES" [ref=e18] [cursor=pointer]:
+            - /url: /categories/
+            - generic [ref=e19]: 
+            - generic [ref=e20]: CATEGORIES
+        - listitem [ref=e21]:
+          - link "Go to TAGS" [ref=e22] [cursor=pointer]:
+            - /url: /tags/
+            - generic [ref=e23]: 
+            - generic [ref=e24]: TAGS
+        - listitem [ref=e25]:
+          - link "Go to ARCHIVES" [ref=e26] [cursor=pointer]:
+            - /url: /archives/
+            - generic [ref=e27]: 
+            - generic [ref=e28]: ARCHIVES
+        - listitem [ref=e29]:
+          - link "Go to ABOUT" [ref=e30] [cursor=pointer]:
+            - /url: /about/
+            - generic [ref=e31]: 
+            - generic [ref=e32]: ABOUT
+        - listitem [ref=e33]:
+          - link "Go to MOTIVATION TEST" [ref=e34] [cursor=pointer]:
+            - /url: /motivation-test/
+            - generic [ref=e35]: 
+            - generic [ref=e36]: MOTIVATION TEST
+        - listitem [ref=e37]:
+          - link "Go to TERMS PRIVACY POLICY" [ref=e38] [cursor=pointer]:
+            - /url: /terms-privacy-policy/
+            - generic [ref=e39]: 
+            - generic [ref=e40]: TERMS PRIVACY POLICY
+    - generic [ref=e41]:
+      - link "Visit GitHub profile" [ref=e42] [cursor=pointer]:
+        - /url: https://github.com/madmatvey
+        - generic [ref=e43]: Visit GitHub profile
+        - generic [ref=e44]: Visit GitHub profile
+        - generic [ref=e45]: 
+      - link "Visit X (Twitter) profile" [ref=e46] [cursor=pointer]:
+        - /url: https://x.com/EugeneLeontev
+        - generic [ref=e47]: Visit X (Twitter) profile
+        - generic [ref=e48]: Visit X (Twitter) profile
+        - generic [ref=e49]: 
+      - link "Send email" [ref=e50] [cursor=pointer]:
+        - /url: javascript:location.href = 'mailto:' + ['potehin','gmail.com'].join('@')
+        - generic [ref=e51]: Send email
+        - generic [ref=e52]: Send email
+        - generic [ref=e53]: 
+      - link "RSS feed" [ref=e54] [cursor=pointer]:
+        - /url: /feed.xml
+        - generic [ref=e55]: RSS feed
+        - generic [ref=e56]: RSS feed
+        - generic [ref=e57]: 
+      - link "Visit LinkedIn profile" [ref=e58] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/eugeneleontev/
+        - generic [ref=e59]: Visit LinkedIn profile
+        - generic [ref=e60]: Visit LinkedIn profile
+        - generic [ref=e61]: 
+  - generic [ref=e62]:
+    - generic [ref=e63]:
+      - banner "Top Bar" [ref=e64]:
+        - generic [ref=e65]:
+          - navigation "Breadcrumb" [ref=e66]:
+            - generic [ref=e67]:
+              - link "Go to homepage" [ref=e68] [cursor=pointer]:
+                - /url: /
+                - text: Home
+              - text: ›
+            - text: About
+          - text:  
+          - search [ref=e69]:
+            - generic [ref=e70]: 
+            - searchbox "search" [ref=e71]
+      - generic [ref=e72]:
+        - main "Main Content" [ref=e73]:
+          - article [ref=e74]:
+            - heading "About" [level=2] [ref=e75]
+            - generic [ref=e76]:
+              - heading "Eugene Leontev – Senior Ruby / Ruby on Rails Engineer" [level=1] [ref=e77]:
+                - text: Eugene Leontev – Senior Ruby /
+                - link "Ruby on Rails" [ref=e78] [cursor=pointer]:
+                  - /url: /topics/ruby-on-rails/
+                - text: Engineer
+              - paragraph [ref=e79]:
+                - strong [ref=e80]: "Location:"
+                - text: Tbilisi, Georgia
+                - strong [ref=e81]: "Role:"
+                - text: Senior Ruby / Ruby on Rails Engineer
+                - strong [ref=e82]: "Focus:"
+                - text: Scaling SaaS APIs (100K–1M+ requests/day),
+                - link "PostgreSQL" [ref=e83] [cursor=pointer]:
+                  - /url: /topics/postgresql/
+                - text: performance, distributed backend systems
+                - strong [ref=e84]: "LinkedIn:"
+                - link "linkedin.com/in/eugeneleontev" [ref=e85] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/eugeneleontev/
+                - strong [ref=e86]: "GitHub:"
+                - link "github.com/madmatvey" [ref=e87] [cursor=pointer]:
+                  - /url: https://github.com/madmatvey
+                - strong [ref=e88]: "Blog:"
+                - link "madmatvey.github.io" [ref=e89] [cursor=pointer]:
+                  - /url: https://madmatvey.github.io/
+              - heading "About Me" [level=2] [ref=e90]
+              - paragraph [ref=e91]: I’m a Senior Ruby on Rails Engineer with 9+ years of experience designing and operating scalable SaaS applications and distributed backend systems. I specialize in large-scale Ruby on Rails applications, REST API design, and database architecture for high-throughput production systems handling 100K+ API requests per day. I’m particularly interested in AI-assisted software development and intelligent content automation systems.
+              - paragraph [ref=e92]: I consider myself an engineer not from my first commercial project, but much earlier—from the habit of understanding how systems work and bringing tasks to a working result, even if it means stepping outside the formal boundaries of a role.
+              - paragraph [ref=e93]: "Before commercial development, I worked as a sound engineer at a radio station and concert hall: I designed recordings, assembled multi-channel setups, negotiated with venues and teams, solved problems from idea to implementation, and did quite a bit of soldering :)) This experience strongly influenced my engineering style: taking full responsibility, not “piece by piece.”"
+              - paragraph [ref=e94]: In commercial development, my main focus is complex backend systems where performance, data correctness, and resilience under load matter.
+              - heading "Key Projects & Achievements" [level=2] [ref=e95]
+              - list [ref=e96]:
+                - listitem [ref=e97]:
+                  - strong [ref=e98]: Scaling SaaS APIs & PostgreSQL performance
+                  - list [ref=e99]:
+                    - listitem [ref=e100]: Reduced core API endpoint latency from 400–500ms to 3–5ms through Ruby on Rails architecture improvements and PostgreSQL query optimization (indexes, denormalization, JOIN simplification).
+                    - listitem [ref=e101]: Operated and optimized production systems handling 100K+ API requests per day with 99.9% uptime.
+                    - listitem [ref=e102]: Designed event-driven architectures with Sidekiq-based background processing for financial and transactional workloads.
+                - listitem [ref=e103]:
+                  - strong [ref=e104]:
+                    - text: Financial /
+                    - link "Fintech" [ref=e105] [cursor=pointer]:
+                      - /url: /topics/fintech/
+                    - text: and API-driven platforms
+                  - list [ref=e106]:
+                    - listitem [ref=e107]: Built auditable financial transaction workflows with idempotent processing patterns for safe state transitions.
+                    - listitem [ref=e108]: Reduced manual verification workload by ~67% via backend automation in lending and fintech domains.
+                    - listitem [ref=e109]: Led integrations with external APIs and CRM platforms, ensuring reliable data synchronization and resilience.
+                - listitem [ref=e110]:
+                  - strong [ref=e111]: Leadership & remote collaboration
+                  - list [ref=e112]:
+                    - listitem [ref=e113]: Led and mentored engineering teams (up to 12 engineers) in remote, distributed environments.
+                    - listitem [ref=e114]: Introduced testing standards, CI pipelines, and code review practices to improve engineering quality and maintainable Rails architecture.
+                    - listitem [ref=e115]: Collaborated closely with founders, product managers, and customer-facing teams to deliver features from inception to production.
+              - heading "What I’m Passionate About" [level=2] [ref=e116]
+              - paragraph [ref=e117]: "I’m particularly drawn to:"
+              - list [ref=e118]:
+                - listitem [ref=e119]:
+                  - strong [ref=e120]: Ruby on Rails application architecture
+                  - text: — scalable web application and service-oriented architectures
+                - listitem [ref=e121]:
+                  - strong [ref=e122]: API design and integration
+                  - text: — designing REST APIs and integrating external services and CRMs
+                - listitem [ref=e123]:
+                  - strong [ref=e124]: PostgreSQL performance optimization
+                  - text: — query tuning, indexing strategies, and data modeling for high-throughput systems
+                - listitem [ref=e125]:
+                  - strong [ref=e126]: Asynchronous processing pipelines
+                  - text: — Sidekiq, background jobs, and distributed processing
+                - listitem [ref=e127]:
+                  - strong [ref=e128]: Production observability & reliability
+                  - text: — metrics, logging, debugging in live systems
+                - listitem [ref=e129]:
+                  - strong [ref=e130]: Reducing uncertainty
+                  - text: — through communication with business and users
+                - listitem [ref=e131]:
+                  - strong [ref=e132]: Stabilizing and “bringing to reason”
+                  - text: existing codebases
+              - heading "My Approach to Work" [level=2] [ref=e133]
+              - paragraph [ref=e134]: "I’m a proponent of “be your own manager”: documenting important decisions in text, working asynchronously, explaining trade-offs, and taking responsibility for imperfect but conscious decisions. I prefer documentation in tests and auto-generated artifacts, with key architectural decisions in brief text notes."
+              - heading "Open Source & Community" [level=2] [ref=e135]
+              - list [ref=e136]:
+                - listitem [ref=e137]:
+                  - strong [ref=e138]: Gasfree SDK
+                  - text: "— Ruby library for gasless TRC-20 transactions:"
+                  - link "github.com/madmatvey/gasfree_sdk" [ref=e139] [cursor=pointer]:
+                    - /url: https://github.com/madmatvey/gasfree_sdk
+                - listitem [ref=e140]:
+                  - strong [ref=e141]: Jekyll Crypto Donations
+                  - text: "— Jekyll plugin for crypto donations:"
+                  - link "github.com/madmatvey/jekyll-crypto-donations" [ref=e142] [cursor=pointer]:
+                    - /url: https://github.com/madmatvey/jekyll-crypto-donations
+                - listitem [ref=e143]:
+                  - strong [ref=e144]: Technical Articles
+                  - text: —
+                  - link "madmatvey.github.io" [ref=e145] [cursor=pointer]:
+                    - /url: https://madmatvey.github.io/
+                  - text: (including the SQL optimization article with ~31k views)
+                - listitem [ref=e146]:
+                  - link "Menhausen App" [ref=e147] [cursor=pointer]:
+                    - /url: https://t.me/menhausen_app_bot/app
+                    - strong [ref=e148]: Menhausen App
+                  - text: "— Telegram Mini App for mental health support:"
+                  - link "github.com/imfineapp/menhausen_app" [ref=e149] [cursor=pointer]:
+                    - /url: https://github.com/imfineapp/menhausen_app
+                - listitem [ref=e150]:
+                  - strong [ref=e151]: Workshops & Talks
+                  - text: "— Internal and public presentations (Thinknetica workshop:"
+                  - link "github.com/thinknetica/workshop_ruby_dev_with_ai" [ref=e152] [cursor=pointer]:
+                    - /url: https://github.com/thinknetica/workshop_ruby_dev_with_ai
+                  - text: )
+              - heading "Location & Availability" [level=2] [ref=e153]
+              - paragraph [ref=e154]:
+                - text: I currently live in
+                - strong [ref=e155]: Tbilisi, Georgia
+                - text: . I haven’t been in or worked from Russia since 2022. I’m comfortable with PST overlap. Relocation to Portugal is not a priority; in the near future, I’m planning to move to
+                - strong [ref=e156]: LATAM
+                - text: .
+              - heading "Personal Background" [level=2] [ref=e157]
+              - paragraph [ref=e158]: Originally from Siberia, Russia. Before 2015, I was a radio DJ, sound producer, musician, and entrepreneur. I moved to Samara in 2015 and to Tbilisi, Georgia in early 2022, where I am today. Gamarjoba, genatsvale! მადლობა რომ კითხულობთ ამას!
+              - paragraph [ref=e159]: I have a work permit as an individual entrepreneur in 🇬🇪 Georgia.
+              - heading "Hobbies" [level=2] [ref=e160]
+              - list [ref=e161]:
+                - listitem [ref=e162]:
+                  - paragraph [ref=e163]:
+                    - strong [ref=e164]: Sailing
+                    - text: — Albert Einstein had a hobby of driving a sailboat. It
+                    - link "helped him to understand how the universe works" [ref=e165] [cursor=pointer]:
+                      - /url: https://www.abc.net.au/news/2017-11-25/how-a-love-of-sailing-helped-einstien-explain-the-universe/9190970
+                    - text: . I have a license to captain a sailboat for recreational purposes.
+                    - link "Here is the sailing school" [ref=e166] [cursor=pointer]:
+                      - /url: https://www.seanation.com/school
+                    - text: I chose and warmly recommend to those who want to really learn how to sail a sailboat, not just get a captain’s license. I’ve also written about
+                    - link "parallels between sailing and product development" [ref=e167] [cursor=pointer]:
+                      - /url: https://madmatvey.github.io/posts/sailing-through-product-development/
+                    - text: .
+                - listitem [ref=e168]:
+                  - paragraph [ref=e169]:
+                    - strong [ref=e170]: Music
+                    - text: — Playing guitar can stimulate creativity and provide a relaxing break from work. Sometimes I make short videos of me playing guitar,
+                    - link "here’s one of them" [ref=e171] [cursor=pointer]:
+                      - /url: https://www.ultimate-guitar.com/shot/madmatvey/669363136
+                    - text: .
+                - listitem [ref=e172]:
+                  - paragraph [ref=e173]:
+                    - strong [ref=e174]: DJ Streaming
+                    - text: — Sometimes on the weekends I stream live, play deejay live mix on my YouTube channel
+                    - link "Lazy Beat" [ref=e175] [cursor=pointer]:
+                      - /url: https://www.youtube.com/@lazybeatdjs
+                    - text: . Subscribe, give me likes!
+              - heading "CV" [level=2] [ref=e176]
+              - paragraph [ref=e177]:
+                - text: Feel free to
+                - link "download my CV" [ref=e178] [cursor=pointer]:
+                  - /url: /assets/Eugene_Leontev_Resume.pdf
+              - heading "Donate Me" [level=2] [ref=e179]
+              - generic [ref=e180]:
+                - generic [ref=e181]: I'm on a mission to fulfill my lifelong dream of buying a sailboat and relocating to live in the ocean. Your support can make this dream a reality! Any contribution, big or small, is deeply appreciated and will bring me one step closer to my adventure on the open seas. Thank you for your generosity!
+                - generic [ref=e182]:
+                  - text: Bitcoin (BTC)
+                  - generic [ref=e184]:
+                    - generic [ref=e186]: 3FWnoeMEAvGYDCqKNMDpfAAc1LqPPwu5Bd
+                    - generic [ref=e187]:
+                      - button [ref=e188] [cursor=pointer]:
+                        - img [ref=e189]
+                      - button [ref=e198] [cursor=pointer]:
+                        - img [ref=e199]
+                      - generic [ref=e218]: Loading...
+                - generic [ref=e219]:
+                  - text: Ethereum (ETH)
+                  - generic [ref=e221]:
+                    - generic [ref=e223]: "0xd6b20B9Cd4055275272e43aA787b9c0a12CB8bbA"
+                    - generic [ref=e224]:
+                      - button [ref=e225] [cursor=pointer]:
+                        - img [ref=e226]
+                      - button [ref=e235] [cursor=pointer]:
+                        - img [ref=e236]
+                      - generic [ref=e255]: Loading...
+                - generic [ref=e256]:
+                  - text: Tether (USDT TRC-20)
+                  - generic [ref=e258]:
+                    - generic [ref=e260]: TQ7ew8mijfJoQ2qSAqSXmjUx1KbB96oMqc
+                    - generic [ref=e261]:
+                      - button [ref=e262] [cursor=pointer]:
+                        - img [ref=e263]
+                      - button [ref=e272] [cursor=pointer]:
+                        - img [ref=e273]
+                      - generic [ref=e292]: Loading...
+        - complementary "Panel" [ref=e293]:
+          - generic [ref=e294]:
+            - generic [ref=e295]:
+              - heading "Recently Updated" [level=2] [ref=e296]
+              - list [ref=e297]:
+                - listitem [ref=e298]:
+                  - link "Single-Threaded on the Outside, Multithreaded on the Inside" [ref=e299] [cursor=pointer]:
+                    - /url: /posts/redis-is-single-threaded/
+                - listitem [ref=e300]:
+                  - 'link "How to Formulate Prompts in Cursor: The TARS Technique" [ref=e301] [cursor=pointer]':
+                    - /url: /posts/tars-prompting/
+                - listitem [ref=e302]:
+                  - 'link "Product-Minded Software Engineer: Key Asset for Teams" [ref=e303] [cursor=pointer]':
+                    - /url: /posts/product-minded-engineer/
+                - listitem [ref=e304]:
+                  - 'link "Ruby gem ''gasfree_sdk'': Send USDT Without TRX on TRON" [ref=e305] [cursor=pointer]':
+                    - /url: /posts/introducing-ruby-gasless-sdk/
+                - listitem [ref=e306]:
+                  - 'link "Discovering Your IKIGAI: Foundation of Strategic Job Search" [ref=e307] [cursor=pointer]':
+                    - /url: /posts/ikigai/
+            - generic [ref=e308]:
+              - heading "Trending Tags" [level=2] [ref=e309]
+              - generic [ref=e310]:
+                - link "software development" [ref=e311] [cursor=pointer]:
+                  - /url: /tags/software-development/
+                - link "innovation" [ref=e312] [cursor=pointer]:
+                  - /url: /tags/innovation/
+                - link "programming" [ref=e313] [cursor=pointer]:
+                  - /url: /tags/programming/
+                - link "tech blog" [ref=e314] [cursor=pointer]:
+                  - /url: /tags/tech-blog/
+                - link "problem-solving" [ref=e315] [cursor=pointer]:
+                  - /url: /tags/problem-solving/
+                - link "engineering leadership" [ref=e316] [cursor=pointer]:
+                  - /url: /tags/engineering-leadership/
+                - link "personal development" [ref=e317] [cursor=pointer]:
+                  - /url: /tags/personal-development/
+                - link "tech" [ref=e318] [cursor=pointer]:
+                  - /url: /tags/tech/
+                - link "leadership" [ref=e319] [cursor=pointer]:
+                  - /url: /tags/leadership/
+                - link "career development" [ref=e320] [cursor=pointer]:
+                  - /url: /tags/career-development/
+      - contentinfo "Site Info" [ref=e323]:
+        - paragraph [ref=e324]:
+          - text: ©
+          - time [ref=e325]: "2026"
+          - link "Visit Eugene Leontev's profile" [ref=e326] [cursor=pointer]:
+            - /url: https://x.com/EugeneLeontev
+            - text: Eugene Leontev
+          - text: . Some rights reserved.
+        - paragraph [ref=e327]:
+          - text: Using the
+          - link "Visit Chirpy theme on GitHub" [ref=e328] [cursor=pointer]:
+            - /url: https://github.com/cotes2020/jekyll-theme-chirpy
+            - text: Chirpy
+          - text: theme for
+          - link "Visit Jekyll website" [ref=e329] [cursor=pointer]:
+            - /url: https://jekyllrb.com
+            - text: Jekyll
+          - text: .
+      - text: "# # # # # # # # # #"
+    - complementary "Scroll to Top"

@@ -150,7 +150,7 @@ RSpec.describe 'Integration: full site build', :integration do
 
     it 'generates YAML and Markdown variants' do
       pg_yml = site.pages.find { |p| p.url.include?('/ai/topic/postgresql.yml') }
-      pg_md = site.pages.find { |p| p.url.include?('/ai/topic/postgresql.md') }
+      pg_md = site.pages.find { |p| p.url.include?('/ai/page/optimizing-postgresql-queries.md') }
       expect(pg_yml).not_to be_nil
       expect(pg_md).not_to be_nil
     end
@@ -179,6 +179,13 @@ RSpec.describe 'Integration: full site build', :integration do
       body_close_idx = about.output.index('</body>')
       link_idx = about.output.index('rel="ai:json"')
       expect(link_idx).to be < body_close_idx
+    end
+
+    it 'injects AI links into home page' do
+      home = site.pages.find { |p| p.url == '/' }
+      expect(home.output).to include('rel="ai:json"')
+      expect(home.output).to include('rel="ai:markdown"')
+      expect(home.output).to include('AI: LLM INSTRUCTION')
     end
 
     it 'does not include /ai/ paths in content pages' do

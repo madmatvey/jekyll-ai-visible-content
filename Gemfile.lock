@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jekyll-ai-visible-content (0.4.1)
+    jekyll-ai-visible-content (0.4.2)
       jekyll (>= 4.0, < 5.0)
 
 GEM

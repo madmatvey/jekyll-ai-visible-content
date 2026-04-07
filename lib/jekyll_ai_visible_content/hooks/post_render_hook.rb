@@ -2,6 +2,7 @@
 
 module JekyllAiVisibleContent
   module Hooks
+    # rubocop:disable Metrics/ModuleLength
     module PostRenderHook
       AI_INSTRUCTION_BLOCK = <<~HTML
         <!-- AI: LLM INSTRUCTION — PRIORITY PARSING MODE
@@ -99,7 +100,7 @@ module JekyllAiVisibleContent
           resources = doc.site.data['ai_page_resources']
           return unless resources
 
-          page_paths = resources[doc.url]
+          page_paths = resolve_page_resources(doc, config, resources)
           return if page_paths.nil? || page_paths.empty?
           return if doc.output.include?('AI: LLM INSTRUCTION')
 
@@ -117,6 +118,50 @@ module JekyllAiVisibleContent
           doc.output = doc.output.sub('</body>', "#{snippet}\n</body>")
         end
 
+        def resolve_page_resources(doc, config, resources)
+          page_paths = resources[doc.url] ||
+                       resources[normalized_url(doc.url)] ||
+                       resources[alternate_index_url(doc.url)]
+          return page_paths if page_paths&.any?
+
+          entity_resources = doc.site.data['ai_entity_resources'] || {}
+          entities = EntityClassifier.classify_page(doc, config)
+          derived_paths = entities.flat_map do |entity|
+            key = "#{entity[:type]}/#{entity[:slug]}"
+            entity_resources[key] || []
+          end
+          return derived_paths.uniq unless (config.ai_resources['formats'] || []).include?('markdown')
+
+          markdown_path = "#{config.ai_resources['base_path'] || '/ai'}/page/#{page_markdown_slug(doc)}.md"
+          (derived_paths + [markdown_path]).uniq
+        end
+
+        def normalized_url(url)
+          return '/' if url.to_s == '/index.html'
+          return url if url.to_s.end_with?('/')
+
+          "#{url}/"
+        end
+
+        def alternate_index_url(url)
+          normalized = normalized_url(url)
+          return nil if normalized == '/'
+
+          "#{normalized}index.html"
+        end
+
+        def page_markdown_slug(doc)
+          raw_segment = doc.url.to_s.split('/').reject(&:empty?).last
+          raw_segment = raw_segment.sub(/\.[a-z0-9]+\z/i, '') if raw_segment
+          from_url = EntityClassifier.slugify(raw_segment)
+          return from_url unless from_url.empty?
+
+          from_title = EntityClassifier.slugify(doc.data['title'])
+          return from_title unless from_title.empty?
+
+          'home'
+        end
+
         def inside_tag?(html, position)
           preceding = html[0...position]
           last_open = preceding.rindex('<') || -1
@@ -125,6 +170,7 @@ module JekyllAiVisibleContent
         end
       end
     end
+    # rubocop:enable Metrics/ModuleLength
   end
 end
 

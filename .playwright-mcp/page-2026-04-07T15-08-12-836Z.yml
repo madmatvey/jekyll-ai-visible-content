@@ -1,0 +1,381 @@
+- generic [active] [ref=e1]:
+  - complementary "Sidebar" [ref=e2]:
+    - generic [ref=e3]:
+      - link "Go to homepage" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Go to homepage
+        - generic [ref=e6]: Go to homepage
+        - img [ref=e7]
+      - heading "Go to homepage" [level=2] [ref=e8]:
+        - link "Go to homepage" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - text: Eugene Leontev The Engineer
+      - paragraph [ref=e10]: Innovate. Code. Inspire. Since 1984.
+    - navigation [ref=e11]:
+      - list [ref=e12]:
+        - listitem [ref=e13]:
+          - link "Go to homepage" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e15]: 
+            - generic [ref=e16]: HOME
+        - listitem [ref=e17]:
+          - link "Go to CATEGORIES" [ref=e18] [cursor=pointer]:
+            - /url: /categories/
+            - generic [ref=e19]: 
+            - generic [ref=e20]: CATEGORIES
+        - listitem [ref=e21]:
+          - link "Go to TAGS" [ref=e22] [cursor=pointer]:
+            - /url: /tags/
+            - generic [ref=e23]: 
+            - generic [ref=e24]: TAGS
+        - listitem [ref=e25]:
+          - link "Go to ARCHIVES" [ref=e26] [cursor=pointer]:
+            - /url: /archives/
+            - generic [ref=e27]: 
+            - generic [ref=e28]: ARCHIVES
+        - listitem [ref=e29]:
+          - link "Go to ABOUT" [ref=e30] [cursor=pointer]:
+            - /url: /about/
+            - generic [ref=e31]: 
+            - generic [ref=e32]: ABOUT
+        - listitem [ref=e33]:
+          - link "Go to MOTIVATION TEST" [ref=e34] [cursor=pointer]:
+            - /url: /motivation-test/
+            - generic [ref=e35]: 
+            - generic [ref=e36]: MOTIVATION TEST
+        - listitem [ref=e37]:
+          - link "Go to TERMS PRIVACY POLICY" [ref=e38] [cursor=pointer]:
+            - /url: /terms-privacy-policy/
+            - generic [ref=e39]: 
+            - generic [ref=e40]: TERMS PRIVACY POLICY
+    - generic [ref=e41]:
+      - link "Visit GitHub profile" [ref=e42] [cursor=pointer]:
+        - /url: https://github.com/madmatvey
+        - generic [ref=e43]: Visit GitHub profile
+        - generic [ref=e44]: Visit GitHub profile
+        - generic [ref=e45]: 
+      - link "Visit X (Twitter) profile" [ref=e46] [cursor=pointer]:
+        - /url: https://x.com/EugeneLeontev
+        - generic [ref=e47]: Visit X (Twitter) profile
+        - generic [ref=e48]: Visit X (Twitter) profile
+        - generic [ref=e49]: 
+      - link "Send email" [ref=e50] [cursor=pointer]:
+        - /url: javascript:location.href = 'mailto:' + ['potehin','gmail.com'].join('@')
+        - generic [ref=e51]: Send email
+        - generic [ref=e52]: Send email
+        - generic [ref=e53]: 
+      - link "RSS feed" [ref=e54] [cursor=pointer]:
+        - /url: /feed.xml
+        - generic [ref=e55]: RSS feed
+        - generic [ref=e56]: RSS feed
+        - generic [ref=e57]: 
+      - link "Visit LinkedIn profile" [ref=e58] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/eugeneleontev/
+        - generic [ref=e59]: Visit LinkedIn profile
+        - generic [ref=e60]: Visit LinkedIn profile
+        - generic [ref=e61]: 
+  - generic [ref=e62]:
+    - generic [ref=e63]:
+      - banner "Top Bar" [ref=e64]:
+        - generic [ref=e65]:
+          - navigation "Breadcrumb" [ref=e66]:
+            - generic [ref=e67]:
+              - link "Go to homepage" [ref=e68] [cursor=pointer]:
+                - /url: /
+                - text: Home
+              - text: ›
+            - text: How I Hired a Fast AI Junior Developer for $192 a Year
+          - text:  
+          - search [ref=e69]:
+            - generic [ref=e70]: 
+            - searchbox "search" [ref=e71]
+      - generic [ref=e72]:
+        - main "Main Content" [ref=e73]:
+          - article [ref=e74]:
+            - generic [ref=e75]:
+              - heading "How I Hired a Fast AI Junior Developer for $192 a Year" [level=1] [ref=e76]
+              - paragraph [ref=e77]: How I use Cursor.ai as a fast AI junior developer for $192/year to speed up coding, automate tasks, and boost productivity by 2-3x. Learn more!
+              - generic [ref=e78]:
+                - generic [ref=e79]:
+                  - text: Posted
+                  - time [ref=e80]: Feb 3, 2025
+                - generic [ref=e81]:
+                  - text: • Updated
+                  - time [ref=e82]: Feb 6, 2026
+                - generic [ref=e83]:
+                  - 'link "View image: AI junior developer illustration showing Cursor.ai productivity boost" [ref=e84] [cursor=pointer]':
+                    - /url: /assets/img/ai-junior/ai-junior.webp
+                    - generic [ref=e85]: "View image: AI junior developer illustration showing Cursor.ai productivity boost"
+                    - img "AI junior developer illustration showing Cursor.ai productivity boost" [ref=e86]
+                  - generic [ref=e87]: AI junior developer illustration showing Cursor.ai productivity boost
+                - generic [ref=e88]:
+                  - generic [ref=e89]:
+                    - text: By
+                    - emphasis [ref=e90]:
+                      - link "Visit Eugene Leontev's profile" [ref=e91] [cursor=pointer]:
+                        - /url: https://github.com/madmatvey/
+                        - text: Eugene Leontev
+                  - generic [ref=e93]:
+                    - emphasis [ref=e94]: 2 min
+                    - text: read
+            - generic [ref=e95]:
+              - heading "How I Hired a Fast AI Junior Developer for $192 a Year" [level=3] [ref=e96]:
+                - strong [ref=e98]: How I Hired a Fast AI Junior Developer for $192 a Year
+              - paragraph [ref=e99]: I’ve been coding for 25 years, constantly looking for ways to speed up development. Recently, I found a tool that completely changed how I write code.
+              - paragraph [ref=e100]: For just $192 a year, I essentially “hired” an AI junior developer—Cursor.ai with Claude 3.5. Now, instead of writing code myself, I focus on setting tasks, reviewing, and making corrections.
+              - heading "How My Workflow Changed" [level=4] [ref=e101]:
+                - strong [ref=e103]: How My Workflow Changed
+              - paragraph [ref=e104]:
+                - text: I used to break down large tasks, prioritize them, and manually write the code. Now, I assign these tasks to
+                - link "Cursor.com" [ref=e105] [cursor=pointer]:
+                  - /url: https://cursor.com
+                - text: . It writes the code, covers it with tests, fixes bugs, and I only step in to guide and review the results. In the end, about 80% of the code is good to go, and I fine-tune the remaining 20%.
+              - heading "What AI Does Best" [level=4] [ref=e106]:
+                - strong [ref=e108]: What AI Does Best
+              - paragraph [ref=e109]: "It excels at tasks with a clearly defined expected outcome. But there are some quirks:"
+              - list [ref=e110]:
+                - listitem [ref=e111]: It struggles when it’s unclear which library versions to use, especially if APIs have changed.
+                - listitem [ref=e112]: Sometimes, it modifies parts of the code I didn’t ask it to touch, showing unexpected “initiative”—which can be either useful or frustrating.
+              - paragraph [ref=e113]: But at times, it really impresses me! For example, I once asked it to analyze my code for potential race conditions, and it not only highlighted unexpected issues but also suggested fixes based on existing patterns in my project.
+              - heading "How My Role Has Changed" [level=4] [ref=e114]:
+                - strong [ref=e116]: How My Role Has Changed
+              - paragraph [ref=e117]:
+                - text: I feel like I’ve hired a super-fast junior dev who works 24/7 and gets things right about 80% of the time.
+                - text: My productivity has increased 2-3 times. I get more done and, more importantly, I have more time to think things through and even take breaks.
+              - heading "Is $192 a Year Worth It?" [level=4] [ref=e118]:
+                - strong [ref=e120]: Is $192 a Year Worth It?
+              - paragraph [ref=e121]: For me—absolutely. It’s a fully justified investment. I used to have a Copilot subscription but canceled it because it was more of a distraction than a help.
+              - paragraph [ref=e122]: Who would I recommend it to? Pretty much anyone! I even saw a 5-year-old girl build an AI-powered chat with Harry Potter just by giving Cursor.ai commands—without knowing anything about web development. This is mind-blowing and has potential across many fields.
+              - paragraph [ref=e123]: The key is learning how to set tasks properly. Once you do, AI won’t get in your way—it’ll actually help you.
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - generic [ref=e126]: 
+                - 'link "View posts in category: Personal" [ref=e127] [cursor=pointer]':
+                  - /url: /categories/personal/
+                  - text: Personal
+                - text: ","
+                - 'link "View posts in category: Blog" [ref=e128] [cursor=pointer]':
+                  - /url: /categories/blog/
+                  - text: Blog
+              - generic [ref=e129]:
+                - generic [ref=e130]: 
+                - 'link "View posts tagged: ai and problem-solving" [ref=e131] [cursor=pointer]':
+                  - /url: /tags/ai-and-problem-solving/
+                  - text: ai and problem-solving
+                - 'link "View posts tagged: coding" [ref=e132] [cursor=pointer]':
+                  - /url: /tags/coding/
+                  - text: coding
+                - 'link "View posts tagged: development" [ref=e133] [cursor=pointer]':
+                  - /url: /tags/development/
+                  - text: development
+                - 'link "View posts tagged: engineering leadership" [ref=e134] [cursor=pointer]':
+                  - /url: /tags/engineering-leadership/
+                  - text: engineering leadership
+                - 'link "View posts tagged: productivity and innovation" [ref=e135] [cursor=pointer]':
+                  - /url: /tags/productivity-and-innovation/
+                  - text: productivity and innovation
+                - 'link "View posts tagged: programming" [ref=e136] [cursor=pointer]':
+                  - /url: /tags/programming/
+                  - text: programming
+                - 'link "View posts tagged: ruby developer" [ref=e137] [cursor=pointer]':
+                  - /url: /tags/ruby-developer/
+                  - text: ruby developer
+                - 'link "View posts tagged: software development" [ref=e138] [cursor=pointer]':
+                  - /url: /tags/software-development/
+                  - text: software development
+                - 'link "View posts tagged: tech" [ref=e139] [cursor=pointer]':
+                  - /url: /tags/tech/
+                  - text: tech
+                - 'link "View posts tagged: tech blog" [ref=e140] [cursor=pointer]':
+                  - /url: /tags/tech-blog/
+                  - text: tech blog
+                - 'link "View posts tagged: tech career" [ref=e141] [cursor=pointer]':
+                  - /url: /tags/tech-career/
+                  - text: tech career
+                - 'link "View posts tagged: ai-powered development" [ref=e142] [cursor=pointer]':
+                  - /url: /tags/ai-powered-development/
+                  - text: ai-powered development
+                - 'link "View posts tagged: ai coding assistant" [ref=e143] [cursor=pointer]':
+                  - /url: /tags/ai-coding-assistant/
+                  - text: ai coding assistant
+                - 'link "View posts tagged: ai productivity" [ref=e144] [cursor=pointer]':
+                  - /url: /tags/ai-productivity/
+                  - text: ai productivity
+                - 'link "View posts tagged: ai developer tools" [ref=e145] [cursor=pointer]':
+                  - /url: /tags/ai-developer-tools/
+                  - text: ai developer tools
+                - 'link "View posts tagged: cursor ai" [ref=e146] [cursor=pointer]':
+                  - /url: /tags/cursor-ai/
+                  - text: cursor ai
+                - 'link "View posts tagged: claude ai" [ref=e147] [cursor=pointer]':
+                  - /url: /tags/claude-ai/
+                  - text: claude ai
+                - 'link "View posts tagged: software engineering automation" [ref=e148] [cursor=pointer]':
+                  - /url: /tags/software-engineering-automation/
+                  - text: software engineering automation
+                - 'link "View posts tagged: ai junior developer" [ref=e149] [cursor=pointer]':
+                  - /url: /tags/ai-junior-developer/
+                  - text: ai junior developer
+                - 'link "View posts tagged: future of coding" [ref=e150] [cursor=pointer]':
+                  - /url: /tags/future-of-coding/
+                  - text: future of coding
+              - generic [ref=e151]:
+                - generic [ref=e152]:
+                  - text: This post is licensed under
+                  - link "CC BY 4.0" [ref=e153] [cursor=pointer]:
+                    - /url: https://creativecommons.org/licenses/by/4.0/
+                  - text: by the author.
+                - generic [ref=e154]:
+                  - generic [ref=e155]: "Share:"
+                  - generic [ref=e156]:
+                    - link "X" [ref=e157] [cursor=pointer]:
+                      - /url: https://x.com/intent/tweet?text=How%20I%20Hired%20a%20Fast%20AI%20Junior%20Developer%20for%20$192%20a%20Year%20-%20Eugene%20Leontev%20The Engineer&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2Fai-junior%2F
+                      - generic [ref=e158]: 
+                      - generic [ref=e159]: X
+                    - link "Facebook" [ref=e160] [cursor=pointer]:
+                      - /url: https://www.facebook.com/sharer/sharer.php?title=How%20I%20Hired%20a%20Fast%20AI%20Junior%20Developer%20for%20$192%20a%20Year%20-%20Eugene%20Leontev%20The Engineer&u=http%3A%2F%2Flocalhost%3A4000%2Fposts%2Fai-junior%2F
+                      - generic [ref=e161]: 
+                      - generic [ref=e162]: Facebook
+                    - link "Telegram" [ref=e163] [cursor=pointer]:
+                      - /url: https://t.me/share/url?url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2Fai-junior%2F&text=How%20I%20Hired%20a%20Fast%20AI%20Junior%20Developer%20for%20$192%20a%20Year%20-%20Eugene%20Leontev%20The Engineer
+                      - generic [ref=e164]: 
+                      - generic [ref=e165]: Telegram
+                    - button "Copy link" [ref=e166] [cursor=pointer]:
+                      - generic: 
+        - complementary "Panel" [ref=e167]:
+          - generic [ref=e168]:
+            - generic [ref=e169]:
+              - heading "Recently Updated" [level=2] [ref=e170]
+              - list [ref=e171]:
+                - listitem [ref=e172]:
+                  - link "Single-Threaded on the Outside, Multithreaded on the Inside" [ref=e173] [cursor=pointer]:
+                    - /url: /posts/redis-is-single-threaded/
+                - listitem [ref=e174]:
+                  - 'link "How to Formulate Prompts in Cursor: The TARS Technique" [ref=e175] [cursor=pointer]':
+                    - /url: /posts/tars-prompting/
+                - listitem [ref=e176]:
+                  - 'link "Product-Minded Software Engineer: Key Asset for Teams" [ref=e177] [cursor=pointer]':
+                    - /url: /posts/product-minded-engineer/
+                - listitem [ref=e178]:
+                  - 'link "Ruby gem ''gasfree_sdk'': Send USDT Without TRX on TRON" [ref=e179] [cursor=pointer]':
+                    - /url: /posts/introducing-ruby-gasless-sdk/
+                - listitem [ref=e180]:
+                  - 'link "Discovering Your IKIGAI: Foundation of Strategic Job Search" [ref=e181] [cursor=pointer]':
+                    - /url: /posts/ikigai/
+            - generic [ref=e182]:
+              - heading "Trending Tags" [level=2] [ref=e183]
+              - generic [ref=e184]:
+                - link "software development" [ref=e185] [cursor=pointer]:
+                  - /url: /tags/software-development/
+                - link "innovation" [ref=e186] [cursor=pointer]:
+                  - /url: /tags/innovation/
+                - link "programming" [ref=e187] [cursor=pointer]:
+                  - /url: /tags/programming/
+                - link "tech blog" [ref=e188] [cursor=pointer]:
+                  - /url: /tags/tech-blog/
+                - link "problem-solving" [ref=e189] [cursor=pointer]:
+                  - /url: /tags/problem-solving/
+                - link "engineering leadership" [ref=e190] [cursor=pointer]:
+                  - /url: /tags/engineering-leadership/
+                - link "personal development" [ref=e191] [cursor=pointer]:
+                  - /url: /tags/personal-development/
+                - link "tech" [ref=e192] [cursor=pointer]:
+                  - /url: /tags/tech/
+                - link "leadership" [ref=e193] [cursor=pointer]:
+                  - /url: /tags/leadership/
+                - link "career development" [ref=e194] [cursor=pointer]:
+                  - /url: /tags/career-development/
+          - generic [ref=e195]:
+            - heading "Contents" [level=2] [ref=e196]
+            - navigation [ref=e197]:
+              - list [ref=e198]:
+                - listitem [ref=e199]:
+                  - 'link "Go to section: How I Hired a Fast AI Junior Developer for $192 a Year" [ref=e200] [cursor=pointer]':
+                    - /url: "#how-i-hired-a-fast-ai-junior-developer-for-192-a-year"
+                    - text: How I Hired a Fast AI Junior Developer for $192 a Year
+                  - list [ref=e201]:
+                    - listitem [ref=e202]:
+                      - 'link "Go to section: How My Workflow Changed" [ref=e203] [cursor=pointer]':
+                        - /url: "#how-my-workflow-changed"
+                        - text: How My Workflow Changed
+                    - listitem [ref=e204]:
+                      - 'link "Go to section: What AI Does Best" [ref=e205] [cursor=pointer]':
+                        - /url: "#what-ai-does-best"
+                        - text: What AI Does Best
+                    - listitem [ref=e206]:
+                      - 'link "Go to section: How My Role Has Changed" [ref=e207] [cursor=pointer]':
+                        - /url: "#how-my-role-has-changed"
+                        - text: How My Role Has Changed
+                    - listitem [ref=e208]:
+                      - 'link "Go to section: Is $192 a Year Worth It?" [ref=e209] [cursor=pointer]':
+                        - /url: "#is-192-a-year-worth-it"
+                        - text: Is $192 a Year Worth It?
+      - generic [ref=e211]:
+        - paragraph [ref=e213]:
+          - text: Comments powered by
+          - link "Disqus" [ref=e214] [cursor=pointer]:
+            - /url: https://disqus.com/
+          - text: .
+        - complementary "Further Reading" [ref=e215]:
+          - heading "Further Reading" [level=3] [ref=e216]
+          - navigation [ref=e217]:
+            - article [ref=e218]:
+              - 'link "Jun 8, 2025 Ruby gem ''gasfree_sdk'': Send USDT Without TRX on TRON Learn how to send USDT TRC-20 on TRON without needing TRX or energy using Ruby gem gasfree_sdk. Build gasless transactions and simplify Web3 UX." [ref=e219] [cursor=pointer]':
+                - /url: /posts/introducing-ruby-gasless-sdk/
+                - generic [ref=e220]:
+                  - time [ref=e221]: Jun 8, 2025
+                  - 'heading "Ruby gem ''gasfree_sdk'': Send USDT Without TRX on TRON" [level=4] [ref=e222]'
+                  - paragraph [ref=e224]: Learn how to send USDT TRC-20 on TRON without needing TRX or energy using Ruby gem gasfree_sdk. Build gasless transactions and simplify Web3 UX.
+            - article [ref=e225]:
+              - 'link "Jul 9, 2025 How to Formulate Prompts in Cursor: The TARS Technique Learn how to formulate prompts in Cursor using the TARS technique (Task, Assumptions, Requirements, Specification) to get more accurate and helpful results." [ref=e226] [cursor=pointer]':
+                - /url: /posts/tars-prompting/
+                - generic [ref=e227]:
+                  - time [ref=e228]: Jul 9, 2025
+                  - 'heading "How to Formulate Prompts in Cursor: The TARS Technique" [level=4] [ref=e229]'
+                  - paragraph [ref=e231]: Learn how to formulate prompts in Cursor using the TARS technique (Task, Assumptions, Requirements, Specification) to get more accurate and helpful results.
+            - article [ref=e232]:
+              - link [ref=e233] [cursor=pointer]:
+                - /url: /posts/redis-is-single-threaded/
+              - generic [ref=e234]:
+                - link "Mar 4, 2026 Single-Threaded on the Outside, Multithreaded on the Inside" [ref=e235] [cursor=pointer]:
+                  - /url: /posts/redis-is-single-threaded/
+                  - time [ref=e236]: Mar 4, 2026
+                  - heading "Single-Threaded on the Outside, Multithreaded on the Inside" [level=4] [ref=e237]
+                - generic [ref=e238]:
+                  - link:
+                    - /url: /posts/redis-is-single-threaded/
+                  - paragraph [ref=e239]:
+                    - link "Learn how" [ref=e240] [cursor=pointer]:
+                      - /url: /posts/redis-is-single-threaded/
+                    - link "Redis" [ref=e241] [cursor=pointer]:
+                      - /url: /topics/redis/
+                    - text: is single-threaded on the outside, but multithreaded on the inside. Read the full case study!
+        - navigation "Post Navigation" [ref=e242]:
+          - link "Older" [ref=e243] [cursor=pointer]:
+            - /url: /posts/top-five-books-for-engineering-leaders/
+            - text: Older
+            - paragraph [ref=e244]: Top 5 Must-Read Books for Engineering Leaders
+          - link "Newer" [ref=e245] [cursor=pointer]:
+            - /url: /posts/introducing-ruby-gasless-sdk/
+            - text: Newer
+            - paragraph [ref=e246]: "Ruby gem 'gasfree_sdk': Send USDT Without TRX on TRON"
+        - contentinfo "Site Info" [ref=e247]:
+          - paragraph [ref=e248]:
+            - text: ©
+            - time [ref=e249]: "2026"
+            - link "Visit Eugene Leontev's profile" [ref=e250] [cursor=pointer]:
+              - /url: https://x.com/EugeneLeontev
+              - text: Eugene Leontev
+            - text: . Some rights reserved.
+          - paragraph [ref=e251]:
+            - text: Using the
+            - link "Visit Chirpy theme on GitHub" [ref=e252] [cursor=pointer]:
+              - /url: https://github.com/cotes2020/jekyll-theme-chirpy
+              - text: Chirpy
+            - text: theme for
+            - link "Visit Jekyll website" [ref=e253] [cursor=pointer]:
+              - /url: https://jekyllrb.com
+              - text: Jekyll
+            - text: .
+      - text: "# # # # # # # # # #"
+    - complementary "Scroll to Top"

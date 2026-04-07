@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.2 (2026-04-07)
+
+- Ensure AI link and instruction injection also works reliably on home and about pages via URL normalization/fallback lookup
+- Generate page-level markdown resources under `/ai/page/<slug>.md` using real source front matter/content instead of entity summary markdown
+- Improve markdown resource slug normalization and add coverage for home-page injection and page-markdown outputs
+
 ## 0.4.1 (2026-04-07)
 
 - Add fallback entity classification for general articles (derive stable topic slug from page URL/title when explicit entities are absent)
