@@ -336,7 +336,7 @@ Set `validation.fail_build_on_error: true` to make errors break the build in CI.
 - Works alongside `jekyll-seo-tag` (avoids duplicate WebSite JSON-LD)
 - Works alongside `jekyll-sitemap` (does not generate its own sitemap)
 - Works alongside `jekyll-feed`
-- Requires Jekyll 4.0+ and Ruby 3.0+
+- Requires Jekyll 4.0+ and Ruby 3.2+
 
 ## Development
 
