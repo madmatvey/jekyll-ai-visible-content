@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1 (2026-04-07)
+
+- Add fallback entity classification for general articles (derive stable topic slug from page URL/title when explicit entities are absent)
+- Ensure AI resources are generated for ordinary posts/pages so AI link injection can still occur
+- Add regression test coverage for general-article fallback classification
+
 ## 0.4.0 (2026-04-07)
 
 - Add automatic AI resource generation per content page with deterministic `/ai/<type>/<slug>.{json,yml,md}` outputs
