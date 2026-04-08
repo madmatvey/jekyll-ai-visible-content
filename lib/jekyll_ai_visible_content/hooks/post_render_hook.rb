@@ -132,25 +132,35 @@ module JekyllAiVisibleContent
         end
 
         def replace_entity_outside_anchor(html, name, max_per, link_html)
-          pattern = /(?<=\s|>)#{Regexp.escape(name)}(?=[\s,.<])/i
-          excluded_fragments_pattern = %r{
-            (<a\b[^>]*>.*?</a>|
-             <script\b[^>]*>.*?</script>|
-             <style\b[^>]*>.*?</style>|
-             <template\b[^>]*>.*?</template>)
-          }imx
-          chunks = html.split(excluded_fragments_pattern)
+          pattern = /(^|[\s>])(#{Regexp.escape(name)})(?=[\s,.<])/i
+          chunks = html.split(/(<[^>]+>)/m)
           replaced = 0
+          skip_text_replacement = false
 
-          chunks.map!.with_index do |chunk, idx|
-            next chunk if idx.odd?
+          chunks.map! do |chunk|
+            if chunk.start_with?('<')
+              opening_name = chunk[/\A<\s*([a-z0-9:-]+)/i, 1]&.downcase
+              closing_name = chunk[%r{\A<\s*/\s*([a-z0-9:-]+)}i, 1]&.downcase
 
-            chunk.gsub(pattern) do |match|
+              if %w[a script style template].include?(opening_name) && chunk !~ %r{/\s*>\z}
+                skip_text_replacement = true
+              elsif %w[a script style template].include?(closing_name)
+                skip_text_replacement = false
+              end
+
+              next chunk
+            end
+
+            next chunk if skip_text_replacement
+
+            chunk.gsub(pattern) do
+              prefix = ::Regexp.last_match(1)
+              match = ::Regexp.last_match(2)
               if replaced < max_per
                 replaced += 1
-                link_html
+                "#{prefix}#{link_html}"
               else
-                match
+                "#{prefix}#{match}"
               end
             end
           end
