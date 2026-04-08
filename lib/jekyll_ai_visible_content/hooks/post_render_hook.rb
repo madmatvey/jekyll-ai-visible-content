@@ -75,6 +75,45 @@ module JekyllAiVisibleContent
           registry = Entity::Registry.new(config)
           definitions = registry.entity_definitions
           max_per = config.linking['max_links_per_entity_per_post'] || 1
+          apply_to_metadata = config.linking['apply_to_metadata'] == true
+
+          if apply_to_metadata
+            Jekyll.logger.warn('ai_visible_content', 'linking.apply_to_metadata=true may inject HTML into metadata fields')
+          end
+
+          doc.output = link_entities(
+            doc.output,
+            definitions: definitions,
+            max_per: max_per,
+            context: (apply_to_metadata ? :legacy_full_document : :body)
+          )
+        end
+
+        def link_entities(text, definitions:, max_per:, context:)
+          return text unless text
+
+          case context
+          when :body
+            link_entities_in_body(text, definitions, max_per)
+          when :metadata
+            sanitize_metadata_text(text)
+          when :legacy_full_document
+            replace_entities_in_fragment(text, definitions, max_per)
+          else
+            text
+          end
+        end
+
+        def link_entities_in_body(html, definitions, max_per)
+          return html unless html.include?('<body')
+
+          html.sub(/<body\b[^>]*>.*<\/body>/im) do |body_fragment|
+            replace_entities_in_fragment(body_fragment, definitions, max_per)
+          end
+        end
+
+        def replace_entities_in_fragment(fragment, definitions, max_per)
+          result = fragment.dup
 
           definitions.each_value do |defn|
             name = defn['name']
@@ -83,14 +122,15 @@ module JekyllAiVisibleContent
 
             link_html = %(<a href="#{url}" itemprop="about" itemscope ) +
                         %(itemtype="https://schema.org/Thing"><span itemprop="name">#{name}</span></a>)
-
-            doc.output = replace_entity_outside_anchor(doc.output, name, max_per, link_html)
+            result = replace_entity_outside_anchor(result, name, max_per, link_html)
           end
+
+          result
         end
 
         def replace_entity_outside_anchor(html, name, max_per, link_html)
           pattern = /(?<=\s|>)#{Regexp.escape(name)}(?=[\s,.<])/i
-          chunks = html.split(%r{(<a\b[^>]*>.*?</a>)}im)
+          chunks = html.split(%r{(<a\b[^>]*>.*?</a>|<script\b[^>]*>.*?</script>|<style\b[^>]*>.*?</style>|<template\b[^>]*>.*?</template>)}im)
           replaced = 0
 
           chunks.map!.with_index do |chunk, idx|
@@ -107,6 +147,10 @@ module JekyllAiVisibleContent
           end
 
           chunks.join
+        end
+
+        def sanitize_metadata_text(text)
+          text.to_s.gsub(/<[^>]*>/, ' ').gsub(/\s+/, ' ').strip
         end
 
         def inject_ai_resource_links(doc, config)

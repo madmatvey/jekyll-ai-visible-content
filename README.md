@@ -132,6 +132,7 @@ ai_visible_content:
   # --- Internal Linking ---
   linking:
     enable_entity_links: true                # Auto-link known entities in post body
+    apply_to_metadata: false                 # Safe default: never inject <a> into head/SEO/JSON-LD/feed fields
     entity_definitions: {}                   # Custom: slug -> {name, url, description}
     max_links_per_entity_per_post: 1
     enable_related_posts: true
@@ -150,6 +151,12 @@ ai_visible_content:
     verbose: false                           # true = show every warning; false = grouped summary
     max_examples: 3                          # Max examples per warning group in summary mode
 ```
+
+### Entity Linking Safety
+
+`linking.apply_to_metadata` defaults to `false` to keep metadata as plain text. With this default, entity auto-linking is applied to article body content only and is not applied to `<head>` meta tags, JSON-LD descriptions, or feed summaries.
+
+Set `linking.apply_to_metadata: true` only if you explicitly want legacy full-document linking behavior.
 
 ## Layout Integration
 

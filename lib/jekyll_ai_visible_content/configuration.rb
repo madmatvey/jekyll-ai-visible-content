@@ -50,6 +50,7 @@ module JekyllAiVisibleContent
       },
       'linking' => {
         'enable_entity_links' => true,
+        'apply_to_metadata' => false,
         'entity_definitions' => {},
         'max_links_per_entity_per_post' => 1,
         'enable_related_posts' => true,

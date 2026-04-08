@@ -52,6 +52,12 @@ RSpec.describe JekyllAiVisibleContent::Configuration do
     end
   end
 
+  describe '#linking' do
+    it 'defaults to not applying entity links to metadata' do
+      expect(config.linking['apply_to_metadata']).to be false
+    end
+  end
+
   describe '#site_url' do
     it 'returns site url' do
       expect(config.site_url).to eq('https://example.com')
