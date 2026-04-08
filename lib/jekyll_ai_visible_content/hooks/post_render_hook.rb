@@ -78,7 +78,10 @@ module JekyllAiVisibleContent
           apply_to_metadata = config.linking['apply_to_metadata'] == true
 
           if apply_to_metadata
-            Jekyll.logger.warn('ai_visible_content', 'linking.apply_to_metadata=true may inject HTML into metadata fields')
+            Jekyll.logger.warn(
+              'ai_visible_content',
+              'linking.apply_to_metadata=true may inject HTML into metadata fields'
+            )
           end
 
           doc.output = link_entities(
@@ -107,7 +110,7 @@ module JekyllAiVisibleContent
         def link_entities_in_body(html, definitions, max_per)
           return html unless html.include?('<body')
 
-          html.sub(/<body\b[^>]*>.*<\/body>/im) do |body_fragment|
+          html.sub(%r{<body\b[^>]*>.*</body>}im) do |body_fragment|
             replace_entities_in_fragment(body_fragment, definitions, max_per)
           end
         end
@@ -130,7 +133,13 @@ module JekyllAiVisibleContent
 
         def replace_entity_outside_anchor(html, name, max_per, link_html)
           pattern = /(?<=\s|>)#{Regexp.escape(name)}(?=[\s,.<])/i
-          chunks = html.split(%r{(<a\b[^>]*>.*?</a>|<script\b[^>]*>.*?</script>|<style\b[^>]*>.*?</style>|<template\b[^>]*>.*?</template>)}im)
+          excluded_fragments_pattern = %r{
+            (<a\b[^>]*>.*?</a>|
+             <script\b[^>]*>.*?</script>|
+             <style\b[^>]*>.*?</style>|
+             <template\b[^>]*>.*?</template>)
+          }imx
+          chunks = html.split(excluded_fragments_pattern)
           replaced = 0
 
           chunks.map!.with_index do |chunk, idx|
