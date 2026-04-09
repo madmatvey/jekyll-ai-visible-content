@@ -1,6 +1,4 @@
-[![CI](https://github.com/madmatvey/jekyll-ai-visible-content/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/madmatvey/jekyll-ai-visible-content/actions/workflows/ci.yml)
-
-[![Gem Version](https://badge.fury.io/rb/jekyll-ai-visible-content.svg)](https://badge.fury.io/rb/jekyll-ai-visible-content)
+[![CI](https://github.com/madmatvey/jekyll-ai-visible-content/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/madmatvey/jekyll-ai-visible-content/actions/workflows/ci.yml) [![Gem Version](https://badge.fury.io/rb/jekyll-ai-visible-content.svg)](https://badge.fury.io/rb/jekyll-ai-visible-content)
 
 # jekyll-ai-visible-content
 
