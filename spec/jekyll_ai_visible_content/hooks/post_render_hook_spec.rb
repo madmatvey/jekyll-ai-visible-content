@@ -41,6 +41,29 @@ RSpec.describe JekyllAiVisibleContent::Hooks::PostRenderHook do
       expect(result).not_to include('{"description":"<a ')
     end
 
+    it 'does not link entities inside HTML attributes' do
+      html_with_image = <<~HTML
+        <html>
+        <body>
+          <img alt="Redis is single-threaded on the outside, but multithreaded on the inside" src="/hero.jpg">
+          <p>Redis is fast.</p>
+        </body>
+        </html>
+      HTML
+
+      result = described_class.send(
+        :link_entities,
+        html_with_image,
+        definitions: definitions,
+        max_per: 1,
+        context: :body
+      )
+
+      expect(result).to include('alt="Redis is single-threaded on the outside, but multithreaded on the inside"')
+      expect(result).not_to include('alt="<a ')
+      expect(result).to include('<p><a href="/topics/redis/"')
+    end
+
     it 'sanitizes metadata context to plain text' do
       metadata = '<span> Redis </span>   <em>performance</em>'
 
