@@ -52,6 +52,8 @@ module JekyllAiVisibleContent
         'enable_entity_links' => true,
         'apply_to_metadata' => false,
         'entity_definitions' => {},
+        'skip_tags' => %w[a script style template pre code kbd samp],
+        'auto_link_content_types' => %w[pages documents],
         'max_links_per_entity_per_post' => 1,
         'enable_related_posts' => true,
         'related_posts_limit' => 3

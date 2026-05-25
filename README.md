@@ -21,6 +21,46 @@ What `jekyll-seo-tag` does for Google snippets, this gem does for AI answer engi
 - **Build-time validation**: Warns about name inconsistencies, missing metadata, orphan pages
 - **`jekyll-seo-tag` compatible**: Detects its presence and avoids duplicate schemas
 
+## Architecture
+
+```mermaid
+flowchart TD
+  site["Jekyll site"] --> config["ai_visible_content config"]
+  site --> content["Posts, pages, and collections"]
+  site --> layouts["Layouts, Liquid tags, and filters"]
+
+  config --> configuration["Configuration defaults and overrides"]
+  content --> hooks["Post-render hooks"]
+  layouts --> tags["Liquid integration"]
+
+  configuration --> entityRegistry["Entity identity and topic definitions"]
+  entityRegistry --> jsonld["JSON-LD builder"]
+  entityRegistry --> linker["Entity auto-linker"]
+  entityRegistry --> related["Related posts"]
+  configuration --> generators["Static generators"]
+  configuration --> validator["Build-time validation"]
+
+  hooks --> jsonld
+  hooks --> linker
+  tags --> jsonld
+  tags --> related
+
+  linker --> scope{"auto_link_content_types"}
+  scope --> pages["pages"]
+  scope --> posts["posts"]
+  scope --> documents["documents"]
+  scope --> all["all"]
+  linker --> safeTags["skip_tags protected elements"]
+
+  jsonld --> html["Rendered HTML"]
+  linker --> html
+  related --> html
+  generators --> llms["llms.txt and llms-full.txt"]
+  generators --> robots["robots.txt"]
+  generators --> entityMap["entity-map.json"]
+  validator --> buildLog["Grouped build warnings"]
+```
+
 ## Installation
 
 Add to your Jekyll site's `Gemfile`:
@@ -131,9 +171,11 @@ ai_visible_content:
 
   # --- Internal Linking ---
   linking:
-    enable_entity_links: true                # Auto-link known entities in post body
+    enable_entity_links: true                # Auto-link known entities in rendered HTML content
     apply_to_metadata: false                 # Safe default: never inject <a> into head/SEO/JSON-LD/feed fields
     entity_definitions: {}                   # Custom: slug -> {name, url, description}
+    skip_tags: [a, script, style, template, pre, code, kbd, samp]
+    auto_link_content_types: [pages, documents] # pages | posts | documents | all
     max_links_per_entity_per_post: 1
     enable_related_posts: true
     related_posts_limit: 3
@@ -157,6 +199,52 @@ ai_visible_content:
 `linking.apply_to_metadata` defaults to `false` to keep metadata as plain text. With this default, entity auto-linking is applied to article body content only and is not applied to `<head>` meta tags, JSON-LD descriptions, or feed summaries.
 
 Set `linking.apply_to_metadata: true` only if you explicitly want legacy full-document linking behavior.
+
+`linking.skip_tags` controls which HTML elements are protected from automatic entity linking. The default list avoids
+nested anchors and keeps executable or literal content, such as code blocks and keyboard/output samples, unchanged.
+
+`linking.auto_link_content_types` controls which rendered Jekyll objects receive automatic entity links. Supported
+values are `pages`, `posts`, `documents`, and `all`. The default `[pages, documents]` preserves the historical behavior.
+
+Use this setting when you want entity links only in authored articles, or when you want them across the whole site:
+
+```yaml
+# Blog posts only. Useful when home, landing, service, or hero sections should stay untouched.
+ai_visible_content:
+  linking:
+    enable_entity_links: true
+    auto_link_content_types:
+      - posts
+```
+
+```yaml
+# Whole site. Applies entity links to every rendered Jekyll object the plugin sees.
+ai_visible_content:
+  linking:
+    enable_entity_links: true
+    auto_link_content_types:
+      - all
+```
+
+```yaml
+# Historical behavior. Applies to regular pages and all Jekyll documents,
+# including posts and custom collections.
+ai_visible_content:
+  linking:
+    enable_entity_links: true
+    auto_link_content_types:
+      - pages
+      - documents
+```
+
+Content type meanings:
+
+| Value | Applies to |
+|-------|------------|
+| `pages` | `Jekyll::Page` objects such as standalone pages |
+| `posts` | Documents in the `posts` collection only |
+| `documents` | All `Jekyll::Document` objects, including posts and custom collections |
+| `all` | Every rendered object processed by the post-render hook |
 
 ## Layout Integration
 

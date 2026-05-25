@@ -29,6 +29,7 @@ module JekyllAiVisibleContent
         '.yml' => 'ai:yaml',
         '.md' => 'ai:markdown'
       }.freeze
+      DEFAULT_ENTITY_LINK_SKIP_TAGS = %w[a script style template pre code kbd samp].freeze
 
       class << self
         def register!
@@ -47,7 +48,9 @@ module JekyllAiVisibleContent
           return unless config.enabled?
 
           inject_json_ld(doc, config) if config.json_ld['auto_inject']
-          auto_link_entities(doc, config) if config.linking['enable_entity_links']
+          if config.linking['enable_entity_links'] && auto_linkable_content?(doc, config)
+            auto_link_entities(doc, config)
+          end
           inject_ai_resource_links(doc, config) if config.ai_resources['enabled'] && config.ai_resources['auto_inject']
         end
 
@@ -75,6 +78,7 @@ module JekyllAiVisibleContent
           registry = Entity::Registry.new(config)
           definitions = registry.entity_definitions
           max_per = config.linking['max_links_per_entity_per_post'] || 1
+          skip_tags = config.linking['skip_tags'] || DEFAULT_ENTITY_LINK_SKIP_TAGS
           apply_to_metadata = config.linking['apply_to_metadata'] == true
 
           if apply_to_metadata
@@ -88,34 +92,37 @@ module JekyllAiVisibleContent
             doc.output,
             definitions: definitions,
             max_per: max_per,
+            skip_tags: skip_tags,
             context: (apply_to_metadata ? :legacy_full_document : :body)
           )
         end
 
-        def link_entities(text, definitions:, max_per:, context:)
+        def link_entities(text, definitions:, max_per:, context:, skip_tags: DEFAULT_ENTITY_LINK_SKIP_TAGS)
           return text unless text
+
+          normalized_skip_tags = normalize_skip_tags(skip_tags)
 
           case context
           when :body
-            link_entities_in_body(text, definitions, max_per)
+            link_entities_in_body(text, definitions, max_per, normalized_skip_tags)
           when :metadata
             sanitize_metadata_text(text)
           when :legacy_full_document
-            replace_entities_in_fragment(text, definitions, max_per)
+            replace_entities_in_fragment(text, definitions, max_per, normalized_skip_tags)
           else
             text
           end
         end
 
-        def link_entities_in_body(html, definitions, max_per)
+        def link_entities_in_body(html, definitions, max_per, skip_tags)
           return html unless html.include?('<body')
 
           html.sub(%r{<body\b[^>]*>.*</body>}im) do |body_fragment|
-            replace_entities_in_fragment(body_fragment, definitions, max_per)
+            replace_entities_in_fragment(body_fragment, definitions, max_per, skip_tags)
           end
         end
 
-        def replace_entities_in_fragment(fragment, definitions, max_per)
+        def replace_entities_in_fragment(fragment, definitions, max_per, skip_tags)
           result = fragment.dup
 
           definitions.each_value do |defn|
@@ -125,33 +132,34 @@ module JekyllAiVisibleContent
 
             link_html = %(<a href="#{url}" itemprop="about" itemscope ) +
                         %(itemtype="https://schema.org/Thing"><span itemprop="name">#{name}</span></a>)
-            result = replace_entity_outside_anchor(result, name, max_per, link_html)
+            result = replace_entity_outside_skipped_tags(result, name, max_per, link_html, skip_tags)
           end
 
           result
         end
 
-        def replace_entity_outside_anchor(html, name, max_per, link_html)
+        def replace_entity_outside_skipped_tags(html, name, max_per, link_html, skip_tags)
           pattern = /(^|[\s>])(#{Regexp.escape(name)})(?=[\s,.<])/i
           chunks = html.split(/(<[^>]+>)/m)
           replaced = 0
-          skip_text_replacement = false
+          skipped_tag_stack = []
 
           chunks.map! do |chunk|
             if chunk.start_with?('<')
               opening_name = chunk[/\A<\s*([a-z0-9:-]+)/i, 1]&.downcase
               closing_name = chunk[%r{\A<\s*/\s*([a-z0-9:-]+)}i, 1]&.downcase
 
-              if %w[a script style template].include?(opening_name) && chunk !~ %r{/\s*>\z}
-                skip_text_replacement = true
-              elsif %w[a script style template].include?(closing_name)
-                skip_text_replacement = false
+              if opening_name && skip_tags.include?(opening_name) && chunk !~ %r{/\s*>\z}
+                skipped_tag_stack << opening_name
+              elsif closing_name && skip_tags.include?(closing_name)
+                skipped_index = skipped_tag_stack.rindex(closing_name)
+                skipped_tag_stack.delete_at(skipped_index) if skipped_index
               end
 
               next chunk
             end
 
-            next chunk if skip_text_replacement
+            next chunk if skipped_tag_stack.any?
 
             chunk.gsub(pattern) do
               prefix = ::Regexp.last_match(1)
@@ -166,6 +174,26 @@ module JekyllAiVisibleContent
           end
 
           chunks.join
+        end
+
+        def normalize_skip_tags(skip_tags)
+          Array(skip_tags).map(&:to_s).map(&:downcase).reject(&:empty?).uniq
+        end
+
+        def auto_linkable_content?(doc, config)
+          content_types = normalize_auto_link_content_types(config.linking['auto_link_content_types'])
+          return true if content_types.include?('all')
+          return true if content_types.include?('pages') && doc.is_a?(Jekyll::Page)
+          return true if content_types.include?('posts') &&
+                         doc.is_a?(Jekyll::Document) &&
+                         doc.collection&.label.to_s == 'posts'
+          return true if content_types.include?('documents') && doc.is_a?(Jekyll::Document)
+
+          false
+        end
+
+        def normalize_auto_link_content_types(content_types)
+          Array(content_types).map(&:to_s).map(&:downcase).reject(&:empty?).uniq
         end
 
         def sanitize_metadata_text(text)

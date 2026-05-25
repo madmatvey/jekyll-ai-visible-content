@@ -56,6 +56,14 @@ RSpec.describe JekyllAiVisibleContent::Configuration do
     it 'defaults to not applying entity links to metadata' do
       expect(config.linking['apply_to_metadata']).to be false
     end
+
+    it 'defaults to skipping tags that should not receive auto-links' do
+      expect(config.linking['skip_tags']).to include('a', 'script', 'style', 'template', 'pre', 'code', 'kbd', 'samp')
+    end
+
+    it 'defaults to auto-linking pages and documents' do
+      expect(config.linking['auto_link_content_types']).to eq(%w[pages documents])
+    end
   end
 
   describe '#site_url' do
