@@ -88,5 +88,11 @@ RSpec.describe JekyllAiVisibleContent::Generators::LlmsTxtGenerator do
       expect(full_page.content).not_to include('{{ page.title }}')
       expect(full_page.content).not_to include('{% link')
     end
+
+    it 'preserves code examples with angle brackets' do
+      full_page = site.pages.find { |p| p.name == 'llms-full.txt' }
+      expect(full_page.content).to include('class CustomCollectionDoc < ApplicationRecord')
+      expect(full_page.content).to include('<%= target_id %>')
+    end
   end
 end

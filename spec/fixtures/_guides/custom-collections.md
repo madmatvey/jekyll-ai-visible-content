@@ -11,3 +11,9 @@ This page represents documentation sites that organize guides outside of posts.
 # {{ page.title }}
 
 Link back to [this guide]({% link _guides/custom-collections.md %}).
+
+```ruby
+class CustomCollectionDoc < ApplicationRecord
+  # Keep angle brackets in examples like <%= target_id %>.
+end
+```

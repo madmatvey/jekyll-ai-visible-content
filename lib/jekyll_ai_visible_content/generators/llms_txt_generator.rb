@@ -250,7 +250,6 @@ module JekyllAiVisibleContent
         text.to_s
             .gsub(/\{%.*?%\}/m, '')
             .gsub(/\{\{.*?\}\}/m, '')
-            .gsub(/<[^>]+>/, '')
             .gsub(/\n{3,}/, "\n\n")
             .strip
       end
