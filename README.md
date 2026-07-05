@@ -128,6 +128,7 @@ ai_visible_content:
     description: null                        # Defaults to site.description
     sections: []                             # [{heading: "Section", content: "text"}]
     include_full_text: true                  # Also generate /llms-full.txt
+    markdown_urls: false                     # Link entries to generated .md siblings instead of HTML pages
 
   # --- Internal Linking ---
   linking:

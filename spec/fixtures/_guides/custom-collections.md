@@ -7,3 +7,7 @@ nav_order: 1
 Custom collection documentation should appear in AI-visible outputs.
 
 This page represents documentation sites that organize guides outside of posts.
+
+# {{ page.title }}
+
+Link back to [this guide]({% link _guides/custom-collections.md %}).

@@ -2,6 +2,7 @@
 
 module JekyllAiVisibleContent
   module Generators
+    # rubocop:disable Metrics/ClassLength
     class LlmsTxtGenerator < Jekyll::Generator
       safe true
       priority :low
@@ -93,7 +94,7 @@ module JekyllAiVisibleContent
         lines << ''
 
         posts.each do |post|
-          url = "#{config.site_url}#{post.url}"
+          url = document_url(config, post)
           desc = post.data['description']&.to_s&.strip
 
           if full
@@ -102,7 +103,7 @@ module JekyllAiVisibleContent
             lines << "URL: #{url}"
             lines << "Date: #{post.data['date']&.strftime('%Y-%m-%d')}" if post.data['date']
             lines << ''
-            lines << strip_html_and_liquid(post.content) if post.content
+            lines << document_content(post, site) if post.content
             lines << ''
             lines << '---'
             lines << ''
@@ -133,7 +134,7 @@ module JekyllAiVisibleContent
       end
 
       def append_document_entry(lines, config, doc, full:)
-        url = "#{config.site_url}#{doc.url}"
+        url = document_url(config, doc)
         desc = doc.data['description']&.to_s&.strip
 
         if full
@@ -142,7 +143,7 @@ module JekyllAiVisibleContent
           lines << "URL: #{url}"
           lines << "Date: #{doc.data['date']&.strftime('%Y-%m-%d')}" if doc.data['date']
           lines << ''
-          lines << strip_html_and_liquid(doc.content) if doc.content
+          lines << document_content(doc, doc.site) if doc.content
           lines << ''
           lines << '---'
           lines << ''
@@ -202,6 +203,49 @@ module JekyllAiVisibleContent
         value.is_a?(Numeric) || value.to_s.match?(/\A-?\d+(?:\.\d+)?\z/)
       end
 
+      def document_url(config, doc)
+        path = config.llms_txt['markdown_urls'] ? markdown_path(doc.url) : doc.url
+        "#{config.site_url}#{path}"
+      end
+
+      def markdown_path(url)
+        return '/index.md' if url == '/'
+
+        base_path = url.to_s.sub(/\.html?$/, '').sub(%r{/$}, '')
+        "#{base_path}.md"
+      end
+
+      def document_content(doc, site)
+        strip_html_and_liquid(render_liquid(doc, site))
+      end
+
+      def render_liquid(doc, site)
+        raw = doc.content.to_s
+        return raw unless doc.respond_to?(:render_with_liquid?) && doc.render_with_liquid?
+
+        payload = site.site_payload
+        payload['page'] = doc.to_liquid
+
+        doc.renderer.render_liquid(raw, payload, liquid_render_info(doc, site, payload), doc.path)
+      rescue StandardError => e
+        relative_path = doc.respond_to?(:relative_path) ? doc.relative_path : doc.path
+        Jekyll.logger.warn(
+          'jekyll-ai-visible-content',
+          "llms-full.txt Liquid render failed for #{relative_path}: #{e.message}"
+        )
+        raw
+      end
+
+      def liquid_render_info(_doc, site, payload)
+        liquid_options = site.config['liquid'] || {}
+
+        {
+          registers: { site: site, page: payload['page'] },
+          strict_filters: liquid_options['strict_filters'],
+          strict_variables: liquid_options['strict_variables']
+        }
+      end
+
       def strip_html_and_liquid(text)
         text.to_s
             .gsub(/\{%.*?%\}/m, '')
@@ -236,5 +280,6 @@ module JekyllAiVisibleContent
         page
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end
