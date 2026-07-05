@@ -36,6 +36,13 @@ RSpec.describe JekyllAiVisibleContent::Generators::LlmsTxtGenerator do
       expect(llms_page.content).to include('Optimizing PostgreSQL Queries')
     end
 
+    it 'includes custom collection documents' do
+      llms_page = site.pages.find { |p| p.name == 'llms.txt' }
+      expect(llms_page.content).to include('## Guides')
+      expect(llms_page.content).to include('Custom Collection Docs')
+      expect(llms_page.content).to include('/guides/custom-collections/')
+    end
+
     it 'includes links section' do
       llms_page = site.pages.find { |p| p.name == 'llms.txt' }
       expect(llms_page.content).to include('LinkedIn')
@@ -52,6 +59,11 @@ RSpec.describe JekyllAiVisibleContent::Generators::LlmsTxtGenerator do
     it 'includes full post content' do
       full_page = site.pages.find { |p| p.name == 'llms-full.txt' }
       expect(full_page.content).to include('optimizing PostgreSQL queries')
+    end
+
+    it 'includes full custom collection content' do
+      full_page = site.pages.find { |p| p.name == 'llms-full.txt' }
+      expect(full_page.content).to include('Custom collection documentation should appear')
     end
   end
 end

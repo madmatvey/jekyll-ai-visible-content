@@ -21,6 +21,7 @@ RSpec.describe 'Integration: full site build', :integration do
       page = site.pages.find { |p| p.name == 'llms-full.txt' }
       expect(page).not_to be_nil
       expect(page.content).to include('optimizing PostgreSQL queries')
+      expect(page.content).to include('Custom collection documentation should appear')
     end
 
     it 'generates robots.txt with AI crawler rules' do
@@ -219,6 +220,10 @@ RSpec.describe 'Integration: full site build', :integration do
 
     it 'has Posts section' do
       expect(llms_page.content).to include('## Posts')
+    end
+
+    it 'has custom collection sections' do
+      expect(llms_page.content).to include('## Guides')
     end
 
     it 'has Links section' do

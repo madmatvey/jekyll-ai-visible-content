@@ -42,6 +42,7 @@ module JekyllAiVisibleContent
         append_topics_section(lines, config)
         append_custom_sections(lines, config)
         append_posts_section(lines, config, site, full: full)
+        append_collections_sections(lines, config, site, full: full)
         append_links_section(lines, config)
 
         lines.join("\n")
@@ -115,6 +116,43 @@ module JekyllAiVisibleContent
         lines << ''
       end
 
+      def append_collections_sections(lines, config, site, full:)
+        custom_collections(site).each do |collection|
+          docs = sorted_collection_docs(collection, config)
+          next if docs.empty?
+
+          lines << "## #{collection_heading(collection)}"
+          lines << ''
+
+          docs.each do |doc|
+            append_document_entry(lines, config, doc, full: full)
+          end
+
+          lines << ''
+        end
+      end
+
+      def append_document_entry(lines, config, doc, full:)
+        url = "#{config.site_url}#{doc.url}"
+        desc = doc.data['description']&.to_s&.strip
+
+        if full
+          lines << "### #{document_title(doc)}"
+          lines << ''
+          lines << "URL: #{url}"
+          lines << "Date: #{doc.data['date']&.strftime('%Y-%m-%d')}" if doc.data['date']
+          lines << ''
+          lines << strip_html_and_liquid(doc.content) if doc.content
+          lines << ''
+          lines << '---'
+          lines << ''
+        else
+          entry = "- [#{document_title(doc)}](#{url})"
+          entry += ": #{desc}" if desc && !desc.empty?
+          lines << entry
+        end
+      end
+
       def append_links_section(lines, config)
         lines << '## Links'
         lines << ''
@@ -130,6 +168,38 @@ module JekyllAiVisibleContent
 
       def sorted_posts(site)
         site.posts.docs.sort_by { |p| p.data['date'] || Time.at(0) }.reverse
+      end
+
+      def custom_collections(site)
+        site.collections.values.reject { |collection| collection.label == 'posts' || !collection.metadata['output'] }
+      end
+
+      def sorted_collection_docs(collection, config)
+        collection.docs
+                  .select { |doc| ContentFilter.content_page?(doc, config) }
+                  .sort_by { |doc| collection_doc_sort_key(doc) }
+      end
+
+      def collection_doc_sort_key(doc)
+        nav_order = doc.data['nav_order']
+        [
+          nav_order ? 0 : 1,
+          numeric?(nav_order) ? nav_order.to_f : nav_order.to_s,
+          document_title(doc).downcase,
+          doc.url.to_s
+        ]
+      end
+
+      def collection_heading(collection)
+        collection.label.to_s.tr('_-', ' ').split.map(&:capitalize).join(' ')
+      end
+
+      def document_title(doc)
+        doc.data['title'].to_s.strip.empty? ? File.basename(doc.url.to_s, '.*') : doc.data['title']
+      end
+
+      def numeric?(value)
+        value.is_a?(Numeric) || value.to_s.match?(/\A-?\d+(?:\.\d+)?\z/)
       end
 
       def strip_html_and_liquid(text)

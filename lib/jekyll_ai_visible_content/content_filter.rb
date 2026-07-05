@@ -34,10 +34,21 @@ module JekyllAiVisibleContent
       end
 
       def content_pages(site, config = nil)
-        site.posts.docs + site.pages.select { |p| content_page?(p, config) }
+        site.posts.docs +
+          site.pages.select { |p| content_page?(p, config) } +
+          custom_collection_docs(site, config)
       end
 
       private
+
+      def custom_collection_docs(site, config)
+        site.collections.each_value.flat_map do |collection|
+          next [] if collection.label == 'posts'
+          next [] unless collection.metadata['output']
+
+          collection.docs.select { |doc| content_page?(doc, config) }
+        end
+      end
 
       def html_output?(doc)
         ext = doc.respond_to?(:output_ext) ? doc.output_ext : nil
