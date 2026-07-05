@@ -4,6 +4,11 @@ url: "https://example.com"
 author:
   name: "Eugene Leontev"
 
+collections:
+  guides:
+    output: true
+    permalink: "/guides/:name/"
+
 ai_visible_content:
   enabled: true
   entity:

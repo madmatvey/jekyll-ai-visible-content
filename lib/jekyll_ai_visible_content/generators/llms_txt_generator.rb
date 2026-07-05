@@ -2,6 +2,7 @@
 
 module JekyllAiVisibleContent
   module Generators
+    # rubocop:disable Metrics/ClassLength
     class LlmsTxtGenerator < Jekyll::Generator
       safe true
       priority :low
@@ -42,6 +43,7 @@ module JekyllAiVisibleContent
         append_topics_section(lines, config)
         append_custom_sections(lines, config)
         append_posts_section(lines, config, site, full: full)
+        append_collections_sections(lines, config, site, full: full)
         append_links_section(lines, config)
 
         lines.join("\n")
@@ -92,7 +94,7 @@ module JekyllAiVisibleContent
         lines << ''
 
         posts.each do |post|
-          url = "#{config.site_url}#{post.url}"
+          url = document_url(config, post)
           desc = post.data['description']&.to_s&.strip
 
           if full
@@ -101,7 +103,7 @@ module JekyllAiVisibleContent
             lines << "URL: #{url}"
             lines << "Date: #{post.data['date']&.strftime('%Y-%m-%d')}" if post.data['date']
             lines << ''
-            lines << strip_html_and_liquid(post.content) if post.content
+            lines << document_content(post, site) if post.content
             lines << ''
             lines << '---'
             lines << ''
@@ -113,6 +115,43 @@ module JekyllAiVisibleContent
         end
 
         lines << ''
+      end
+
+      def append_collections_sections(lines, config, site, full:)
+        custom_collections(site).each do |collection|
+          docs = sorted_collection_docs(collection, config)
+          next if docs.empty?
+
+          lines << "## #{collection_heading(collection)}"
+          lines << ''
+
+          docs.each do |doc|
+            append_document_entry(lines, config, doc, full: full)
+          end
+
+          lines << ''
+        end
+      end
+
+      def append_document_entry(lines, config, doc, full:)
+        url = document_url(config, doc)
+        desc = doc.data['description']&.to_s&.strip
+
+        if full
+          lines << "### #{document_title(doc)}"
+          lines << ''
+          lines << "URL: #{url}"
+          lines << "Date: #{doc.data['date']&.strftime('%Y-%m-%d')}" if doc.data['date']
+          lines << ''
+          lines << document_content(doc, doc.site) if doc.content
+          lines << ''
+          lines << '---'
+          lines << ''
+        else
+          entry = "- [#{document_title(doc)}](#{url})"
+          entry += ": #{desc}" if desc && !desc.empty?
+          lines << entry
+        end
       end
 
       def append_links_section(lines, config)
@@ -132,11 +171,85 @@ module JekyllAiVisibleContent
         site.posts.docs.sort_by { |p| p.data['date'] || Time.at(0) }.reverse
       end
 
+      def custom_collections(site)
+        site.collections.values.reject { |collection| collection.label == 'posts' || !collection.metadata['output'] }
+      end
+
+      def sorted_collection_docs(collection, config)
+        collection.docs
+                  .select { |doc| ContentFilter.content_page?(doc, config) }
+                  .sort_by { |doc| collection_doc_sort_key(doc) }
+      end
+
+      def collection_doc_sort_key(doc)
+        nav_order = doc.data['nav_order']
+        [
+          nav_order ? 0 : 1,
+          numeric?(nav_order) ? nav_order.to_f : nav_order.to_s,
+          document_title(doc).downcase,
+          doc.url.to_s
+        ]
+      end
+
+      def collection_heading(collection)
+        collection.label.to_s.tr('_-', ' ').split.map(&:capitalize).join(' ')
+      end
+
+      def document_title(doc)
+        doc.data['title'].to_s.strip.empty? ? File.basename(doc.url.to_s, '.*') : doc.data['title']
+      end
+
+      def numeric?(value)
+        value.is_a?(Numeric) || value.to_s.match?(/\A-?\d+(?:\.\d+)?\z/)
+      end
+
+      def document_url(config, doc)
+        path = config.llms_txt['markdown_urls'] ? markdown_path(doc.url) : doc.url
+        "#{config.site_url}#{path}"
+      end
+
+      def markdown_path(url)
+        return '/index.md' if url == '/'
+
+        base_path = url.to_s.sub(/\.html?$/, '').sub(%r{/$}, '')
+        "#{base_path}.md"
+      end
+
+      def document_content(doc, site)
+        strip_html_and_liquid(render_liquid(doc, site))
+      end
+
+      def render_liquid(doc, site)
+        raw = doc.content.to_s
+        return raw unless doc.respond_to?(:render_with_liquid?) && doc.render_with_liquid?
+
+        payload = site.site_payload
+        payload['page'] = doc.to_liquid
+
+        doc.renderer.render_liquid(raw, payload, liquid_render_info(doc, site, payload), doc.path)
+      rescue StandardError => e
+        relative_path = doc.respond_to?(:relative_path) ? doc.relative_path : doc.path
+        Jekyll.logger.warn(
+          'jekyll-ai-visible-content',
+          "llms-full.txt Liquid render failed for #{relative_path}: #{e.message}"
+        )
+        raw
+      end
+
+      def liquid_render_info(_doc, site, payload)
+        liquid_options = site.config['liquid'] || {}
+
+        {
+          registers: { site: site, page: payload['page'] },
+          strict_filters: liquid_options['strict_filters'],
+          strict_variables: liquid_options['strict_variables']
+        }
+      end
+
       def strip_html_and_liquid(text)
         text.to_s
             .gsub(/\{%.*?%\}/m, '')
             .gsub(/\{\{.*?\}\}/m, '')
-            .gsub(/<[^>]+>/, '')
             .gsub(/\n{3,}/, "\n\n")
             .strip
       end
@@ -166,5 +279,6 @@ module JekyllAiVisibleContent
         page
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

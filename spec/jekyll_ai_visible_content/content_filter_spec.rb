@@ -140,6 +140,12 @@ RSpec.describe JekyllAiVisibleContent::ContentFilter do
       expect(urls).to include('/about/')
     end
 
+    it 'includes custom collection documents' do
+      pages = described_class.content_pages(processed_site, config)
+      urls = pages.map(&:url)
+      expect(urls).to include('/guides/custom-collections/')
+    end
+
     it 'excludes generated files' do
       pages = described_class.content_pages(processed_site, config)
       names = pages.select { |p| p.respond_to?(:name) }.map(&:name)

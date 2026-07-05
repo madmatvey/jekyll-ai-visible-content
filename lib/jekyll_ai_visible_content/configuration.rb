@@ -46,7 +46,8 @@ module JekyllAiVisibleContent
         'title' => nil,
         'description' => nil,
         'sections' => [],
-        'include_full_text' => true
+        'include_full_text' => true,
+        'markdown_urls' => false
       },
       'linking' => {
         'enable_entity_links' => true,
